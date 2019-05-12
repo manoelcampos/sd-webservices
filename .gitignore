@@ -1,0 +1,13 @@
+*~$*
+
+#Java Projects
+*.class
+target/
+test/
+.idea
+*.iml
+nbproject/
+nbactions.xml
+nb-configuration.xml
+jax-ws-catalog.xml
+**/src/wsdl
