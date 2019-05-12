@@ -14,3 +14,7 @@ de endereços a partir do CEP, disponibilizado pelos Correios.
 A intenção do script é apenas mostrar como é a requisição SOAP sendo trafegada via HTTP e como é a resposta obtida.
 
 Veja as sub-pastas dos projetos para detalhes.
+
+== Material Complementar
+
+Acesse o https://github.com/manoelcampos/sd-web-services/wiki[Wiki] para consultar materiais complementares.
