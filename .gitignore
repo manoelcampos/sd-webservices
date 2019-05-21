@@ -6,8 +6,6 @@ target/
 test/
 .idea
 *.iml
-nbproject/
+#nbproject/
 nbactions.xml
-nb-configuration.xml
-jax-ws-catalog.xml
 **/src/wsdl

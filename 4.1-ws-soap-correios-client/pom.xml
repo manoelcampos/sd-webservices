@@ -5,6 +5,22 @@
     <artifactId>correios-ws-client</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
+    
+    <name>correios-ws-client</name>
+
+    <properties>
+        <!-- Como SOAP não funciona mais nas versões recentes da plataforma Java (como 11),
+        é preciso usar uma versão anterior a estas.
+        Assim, aqui é definido explicitamente qual versão do JDK usar.-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <!-- Todas essas configurações são incluídas automaticamente quando
+    é criado um cliente de Web Service pelo menu
+    File >> New File e depois "Web Services >> Web Service Client".
+    -->
     <build>
         <resources>
             <resource>
@@ -61,10 +77,15 @@
             </plugin>
         </plugins>
     </build>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-    <name>correios-ws-client</name>
+    
+    <dependencies>
+        <dependency>
+            <!-- Esta dependência também é incluída automaticamente ao criar
+            o cliente de Web Service, como explicado acima. 
+            -->
+            <groupId>org.glassfish.metro</groupId>
+            <artifactId>webservices-rt</artifactId>
+            <version>2.3</version>
+        </dependency>
+    </dependencies>
 </project>
