@@ -12,13 +12,18 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>        
     </properties>
     
     <dependencies>
         <dependency>
+            <!-- Biblioteca para uso de SOAP -->
             <groupId>org.glassfish.metro</groupId>
             <artifactId>webservices-rt</artifactId>
             <version>2.4.0</version>
+            <!--O escopo "provided" indica que o servidor de aplicação
+            é que fornecerá tal biblioteca.-->
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -28,22 +33,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <!-- Biblioteca para uso de injeção de dependência 
+            (Context and Dependency Injection, CDI) 
+            com a anotação @Inject. -->
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <version>1.1</version>
             <scope>provided</scope>
-        </dependency>        
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>1.0.2.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.3.6.Final</version>
-        </dependency>
-        
+        </dependency>   
+             
         <!-- Dependência incluída para evitar o erro
         "Using deprecated META-INF/services mechanism with non-standard property: javax.xml.soap.MetaFactory. Property javax.xml.soap.SAAJMetaFactory should be used instead."
         O arquivo META-INF/services/javax.xml.soap.SAAJMetaFactory
@@ -54,22 +52,23 @@
             <artifactId>saaj-impl</artifactId>
             <version>1.4.0</version>
         </dependency>        
+
+        <!-- Bibliotecas para uso de JPA com Hibernate -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.2.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.3.6.Final</version>
+        </dependency>        
     </dependencies>
 
     <build>
+        <!-- Configurações definidas automaticamente ao criar o projeto -->
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>

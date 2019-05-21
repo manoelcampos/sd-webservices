@@ -39,7 +39,7 @@ public class BuscaCep {
             /*Instancia a classe para permitir o consumo (utilização) do Web Service.
             Para descobrir o nome da classe que dá acesso ao WS, é preciso
             verificar a aba Projects >> Generated Sources e procurar
-            por uma classe cujo nome termine em "Service".
+            por uma classe cujo nome termine em "Service" (normalmente).
             Um WS também deve possuir uma documentação adicional para desenvolvedores,
             apesar de nem sempre existir tal documentação.
             O nome de tal classe deve ser informado lá.
