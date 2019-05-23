@@ -1,15 +1,19 @@
+:numbered:
 = Cadastro com Banco de Dados MySQL utilizando Web Service SOAP
 
 Esta aplicação cria um servidor SOAP que fornece um Web Service para
 permitir a realização de cadastros em um banco de dados MySQL.
 
-O projeto usa a Java Persistence API (JPA) para Mapeamento Objeto-Relacional (Object Relational Mapping, ORM)
-por meio do framework Hibernate 5.
+O projeto usa a Java Persistence API (JPA) para Mapeamento Objeto-Relacional (Object Relational Mapping, ORM) por meio do framework Hibernate 5.
 
-O projeto foi criado e testado no NetBeans 8.2, uma vez que:
+O projeto foi criado e testado no NetBeans 8.2 usando JDK 8.
+Uma versão mais recente como o NetBeans 11 pode ser usada
+mas a maioria dos servidores de aplicação ainda não funcionam
+com versões do JDK acima do 8.
+O projeto pode até utilizar uma versão mais recente do JDK,
+mas o IDE precisa rodar com o JDK 8.
 
-- a versão 9 ainda não possui os plugins para desenvolvimento Web pré-instalados;
-- o IntelliJ IDEA Community (que é a versão gratuita) não possui suporte a Java EE (para desenvolvimento Web).
+O IntelliJ IDEA Community (que é a versão gratuita) não possui suporte a Java EE (para desenvolvimento Web).
 
 == Projetos
 
@@ -32,7 +36,7 @@ Como o projeto usa Hibernate, temos o arquivo link:cadastro-soap-server/src/main
 Usando um DataSource, o App Server permite criar um _pool_ (piscina/tanque) de conexões para o banco de dados. 
 Com o _pool_, diversas conexões são abertas. Quando um cliente conectar e precisar ser feito acesso ao banco, uma destas conexões já estabelecidas é fornecida à aplicação. Isto torna o sistema muito rápido e escalável, uma vez que reaproveitando conexões abertas.
 
-Assim, no arquivo `persistence.xml` devemos apenas indicar, dentro da tag `<jta-data-source>`, o nome do DataSource a ser criado no App Server. Como o DataSource normalmente de ser criado pela interface de administração Web do App Server, para evitar que tenhamos que fazer esse processo manualmente, as configurações de fato da conexão para criação do DataSource são definidas no arquivo link:cadastro-soap-server/src/main/webapp/WEB-INF/glassfish-resources.xml[glassfish-resources.xml].
+Assim, no arquivo `persistence.xml` devemos apenas indicar, dentro da tag `<jta-data-source>`, o nome do DataSource a ser criado no App Server. Como o DataSource normalmente deve ser criado pela interface de administração Web do App Server, para evitar que tenhamos que fazer esse processo manualmente, as configurações de fato da conexão para criação do DataSource são definidas no arquivo link:cadastro-soap-server/src/main/webapp/WEB-INF/glassfish-resources.xml[glassfish-resources.xml].
 *Assim, é preciso abrir tal arquivo para verificar se os dados como usuário e senha do MySQL estão corretos.*
 Quando você cria um _Persistence Unit_ (o arquivo persistence.xml) pelo NetBeans, selecionando a criação de um DataSource, este arquivo `glassfish-resources.xml` é automaticamente criado.
 
@@ -56,13 +60,22 @@ Observe que é preciso executar a aplicação servidora antes de executar o clie
 == Requisitos para executar a Aplicação Servidora
 
 === Servidor de Banco de Dados
-
 O MySQL deve estar instalado e executando na máquina local.
-O arquivo link:criar-banco.sh[criar-banco.sh] conecta ao MySQL e criar o banco de dados "cadastro_soap",
-criando as tabelas e inserindo dados de teste.
+
+==== Linux/macOS
+
+O script link:criar-banco.sh[criar-banco.sh] conecta ao MySQL e cria o banco de dados "cadastro_soap",
+as tabelas e insere dados de teste.
 
 Certifique-se de editar o arquivo para fornecer a senha de root do seu servidor MySQL.
 O arquivo pode ser executado no terminal com `sh criar-banco.sh`
+
+==== Windows
+
+O script acima não funciona em Windows, mas você pode abrir o arquivo e copiar os comandos SQL lá dentro e executar manualmente em uma ferramenta como o https://www.mysql.com/products/workbench/[MySQL Workbench], que talvez já tenha sido instalado quando instalou o servidor MySQL.
+
+Outra opção é instalar o 
+https://docs.microsoft.com/en-us/windows/wsl/install-win10[Windows Subsystem for Linux] que permitirá executar o script `criar-banco.sh` exatamente como em Linux/macOS.
 
 === Servidor de Aplicação
 
@@ -71,17 +84,14 @@ O projeto requer um servidor de aplicação (Application Server, comumente chama
 Após baixar o GlassFish, basta descompactar o zip em qualquer lugar, como na pasta do seu usuário no sistema operacional.
 Como a maioria dos servidores de aplicação, o GlassFish tem um console de administração web.
 Para definir/alterar a senha para acesso a tal console (senha que também é necessária para configurar o GlassFish no NetBeans),
-abra um terminal na pasta `bin` onde descompactou o GlassFish. Lá execute o comando abaixo. 
-
-[source,bash]
-----
-./asadmin change-admin-password
-----
+abra um terminal na pasta `bin` onde descompactou o GlassFish. 
+Se estiver usando Linux/macOS, execute `./asadmin change-admin-password`.
+No Windows o comando é `asadmin.bat change-admin-password`.
 
 Digite `admin` na primeira pergunta para indicar o nome do usuário do GlassFish. Na segunda pergunta apenas digite enter para digitar a senha atual. 
 Digite a nova senha como `admin` também, assim fica fácil de lembrar que o usuário e a senha são os mesmos. No ambiente de desenvolvimento isto é perfeito, só não podemos definir uma senha assim em um ambiente de produção.
 
-Se necessário, execute o comando acima como root. O comando acima não funciona com as últimas versões do JDK (pelo menos não o JDK 11).
+Se necessário, execute o comando acima como root. Tal comando não funciona com as últimas versões do JDK (pelo menos não o JDK 11).
 
 Como nosso projeto usa um banco MySQL, é preciso baixar o driver JDBC que permite que aplicações Java possam se comunicar com o banco. Uma vez que estamos usando Hibernate para acesso ao banco (mapeamento objeto-relacional), nossa aplicação não depende de tal biblioteca. No entanto, o App Server depende dela, pois ele que vai gerenciar as conexões com o banco.
 
