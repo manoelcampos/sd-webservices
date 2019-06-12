@@ -1,6 +1,7 @@
 package com.manoelcampos.server.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ public class Cliente implements Cadastro, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
+    private LocalDate dataCadastro;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Endereco> enderecos;
@@ -62,6 +64,20 @@ public class Cliente implements Cadastro, Serializable {
         }
         
         this.enderecos = enderecos;
+    }
+
+    /**
+     * @return the dataCadastro
+     */
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
+    }
+
+    /**
+     * @param dataCadastro the dataCadastro to set
+     */
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
 

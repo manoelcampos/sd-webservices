@@ -13,7 +13,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/cliente")
 @Transactional
@@ -53,7 +55,13 @@ public class ClienteResource {
     @DELETE
     @Path("{id}")
     public boolean delete(@PathParam("id") long id) {
-        return dao.delete(id);
+        Cliente cliente = dao.findById(id);
+        if(cliente == null){
+            //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
+            throw new WebApplicationException(Response.Status.NOT_FOUND);        
+        }
+        
+        return dao.delete(cliente);
     }
     
     

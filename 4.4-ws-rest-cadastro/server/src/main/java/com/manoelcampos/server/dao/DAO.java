@@ -39,13 +39,6 @@ public interface DAO<T extends Cadastro> {
     boolean delete(T entity);
     
     /**
-     * Remove um objeto do banco a partir do id.
-     * @param id id do objeto a ser removido
-     * @return true se o objeto foi localizado e removido com sucesso, false caso contrário
-     */
-    boolean delete(long id);
-    
-    /**
      * Salva um objeto no banco,
      * que pode ser tanto uma inclusão ou alteração.
      * Se o objeto já existir, será atualizado.

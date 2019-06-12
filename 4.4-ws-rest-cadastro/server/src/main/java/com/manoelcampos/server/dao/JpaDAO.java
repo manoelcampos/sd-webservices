@@ -28,21 +28,14 @@ public class JpaDAO<T extends Cadastro> implements DAO<T> {
         em.remove(entity);
         return true;
     }
-
-    @Override
-    public boolean delete(long id) {
-        T entity = findById(id);
-        return delete(entity);
-    }
     
     @Override
     public long save(T entity) {
         /*Se a entidade tem um ID maior que 0 é porque está sendo
         alterada. Se estivesse sendo incluída, não teria um ID ainda.
         Assim, para inclusão usamos persist() e para alteração usamos merge().*/
-        if(entity.getId() > 0){
+        if(entity.getId() > 0)
             em.merge(entity);
-        }
         else em.persist(entity);
         
         return entity.getId();

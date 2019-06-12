@@ -40,6 +40,16 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <!-- Dependência para permitir usar
+            os tipos como LocalDate e LocalTime do Java 8
+            com JPA. Com tal dependência, nem mesmo é preciso 
+            anotar os campos data e hora com @Temporal. -->
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-java8</artifactId>
+            <version>5.4.3.Final</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
