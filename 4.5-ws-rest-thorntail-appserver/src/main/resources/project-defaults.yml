@@ -1,0 +1,17 @@
+# github.com/thorntail/thorntail-examples/blob/master/datasource/datasource-war/src/main/resources/
+thorntail:
+  datasources:
+    jdbc-drivers:
+      com.mysql:
+        #driver-class-name: com.mysql.cj.jdbc.Driver
+        #xa-datasource-class-name: com.mysql.cj.jdbc.MysqlXADataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        xa-datasource-class-name: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+        driver-module-name: com.mysql
+    data-sources:
+      cadastro_rest_ds:
+        driver-name: com.mysql
+        connection-url: jdbc:mysql://localhost:3306/cadastro_rest?useSSL=false
+        user-name: root
+        password: root
+        jta: true

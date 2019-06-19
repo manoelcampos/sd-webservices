@@ -12,8 +12,87 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.thorntail>2.4.0.Final</version.thorntail>
+        <version.mysql>5.1.47</version.mysql>
+        <!-- 8.0.16 -->
     </properties>
     
+    <profiles>
+        <profile>
+            <!-- Profile com configurações para executar o projeto
+            usando o App Server Thorntail
+            http://thorntail.io
+            -->
+            <id>tt</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            
+            <dependencies>
+                <dependency>
+                    <groupId>io.thorntail</groupId>
+                    <artifactId>boms</artifactId>
+                    <version>${version.thorntail}</version>
+                    <type>pom</type>
+                </dependency>
+
+                <dependency>
+                    <groupId>io.thorntail</groupId>
+                    <artifactId>jaxrs</artifactId>
+                    <version>${version.thorntail}</version>
+                </dependency>  
+
+                <dependency>
+                    <groupId>io.thorntail</groupId>
+                    <artifactId>jpa</artifactId>
+                    <version>${version.thorntail}</version>
+                </dependency>  
+
+                <dependency>
+                    <groupId>io.thorntail</groupId>
+                    <artifactId>cdi</artifactId>
+                    <version>${version.thorntail}</version>
+                </dependency>  
+
+                <dependency>
+                    <!-- 
+                    Cria automaticamente o DataSource a partir
+                    das configurações definidas no arquivo
+                    src/main/resources/project-mysql.yaml
+                    (para PostgreSQL veja https://github.com/thorntail/thorntail-examples/blob/master/datasource/datasource-war/src/main/resources/project-postgres.yaml)
+                    -->
+                    <groupId>io.thorntail</groupId>
+                    <artifactId>datasources</artifactId>
+                    <version>${version.thorntail}</version>
+                </dependency>    
+
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>${version.mysql}</version>
+                </dependency>                
+            </dependencies>
+            
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.thorntail</groupId>
+                        <artifactId>thorntail-maven-plugin</artifactId>
+                        <version>${version.thorntail}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>                
+                </plugins>                
+            </build>
+        </profile>
+    </profiles>
+        
+    <!-- Dependências gerais, independente de qual AppServer for usado. -->
     <dependencies>
         <dependency>
             <!-- Usa o jackson para permitir ignorar
@@ -49,22 +128,44 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-java8</artifactId>
             <version>5.4.3.Final</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.2.Final</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.1.0.Final</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.1.0.Final</version>
-        </dependency>          
+            <scope>provided</scope>
+        </dependency>        
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+            <version>1.0.1.Final</version>
+            <scope>provided</scope>
+        </dependency>      
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.3.0.Final</version>
+            <scope>provided</scope>
+        </dependency>            
     </dependencies>
 
     <build>

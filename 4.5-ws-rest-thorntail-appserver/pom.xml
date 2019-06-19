@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.manoelcampos</groupId>
+    <artifactId>rest-server</artifactId>
+    <name>REST Server</name>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <version.thorntail>2.4.0.Final</version.thorntail>
+        <version.mysql>5.1.47</version.mysql>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.thorntail</groupId>
+                <artifactId>bom-all</artifactId>
+                <version>${version.thorntail}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>rest-server</finalName>
+        <plugins>
+            <plugin>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
+                <version>${version.thorntail}</version>
+        
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Dependências do Thorntail -->
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>jaxrs</artifactId>
+        </dependency>
+    
+        <dependency>
+            <!-- 
+            Cria automaticamente o DataSource a partir
+            das configurações definidas no arquivo
+            src/main/resources/project-mysql.yaml
+            (para PostgreSQL veja https://github.com/thorntail/thorntail-examples/blob/master/datasource/datasource-war/src/main/resources/project-postgres.yaml)
+            -->
+            <groupId>io.thorntail</groupId>
+            <artifactId>datasources</artifactId>
+        </dependency>
+        
+        <dependency>
+            <!-- Suporte para a Java Transaction API (JTA) -->
+            <groupId>io.thorntail</groupId>
+            <artifactId>transactions</artifactId>
+        </dependency>        
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>cdi</artifactId>
+        </dependency>
+        
+        <dependency>
+            <!-- Cria um hollow (oco) jar no lugar de um uber jar.
+            Um hollow jar contém apenas o app server e as dependências, não a aplicação.
+            Um uber jar contém tudo e não precisa de nenhum jar separado para rodar. 
+            
+            Neste caso, para rodar a app, deve-se executar:
+            
+            java -jar rest-server-thorntail.jar rest-server.war
+            -->
+            <groupId>io.thorntail.servers</groupId>
+            <!-- [full|web|microprofile] -->
+            <artifactId>microprofile</artifactId>
+            
+            <version>${version.thorntail}</version>
+        </dependency>
+
+        <!-- Dependências da aplicação 
+        Observe que dependências como o Hibernate são adicionadas 
+        como "provided", indicando que o Thorntail é quem fornecerá as mesmas.
+        Dependências do JavaEE como CDI são normais de serem definidas
+        como "provided", mas dependências externas (como o Hibernate) 
+        não vem inclusas em outros App Servers como o GlassFish 
+        (este inclui o EclipseLink no lugar).
+        -->        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${version.mysql}</version>
+        </dependency>                
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+            <version>1.0.1.Final</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
