@@ -7,7 +7,7 @@
             <!-- JTA para GlassFish 5 -->
             <!-- <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/> -->
             
-            <!-- JTA para Thorntail (antigo Wildfly Swarm) -->
+            <!-- JTA para Thorntail (antigo Wildfly Swarm), Wildfly ou JBoss AS -->
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
             
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

@@ -6,9 +6,14 @@
     <artifactId>rest-server</artifactId>
     <name>REST Server</name>
     <version>1.0.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
+    
+    <!-- Configuração básica do projeto criada em https://thorntail.io/generator/
+    mas pode-se usar o archetype maven io.thorntail.archetypes
+    para isso também. -->
 
     <properties>
+        <version.thorntail.plugin>4.0.0-SNAPSHOT</version.thorntail.plugin>
         <version.thorntail>2.4.0.Final</version.thorntail>
         <version.mysql>5.1.47</version.mysql>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -16,6 +21,34 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    <repositories>
+        <repository>
+            <!-- Permite baixar versões SNAPSHOT (beta) de bibliotecas -->
+            <id>oss.sonatype.org-snapshot</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>    
+    
+    <pluginRepositories>
+        <!-- Permite baixar versões SNAPSHOT (beta) de plugins -->
+        <pluginRepository>
+            <id>oss.sonatype.org-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencyManagement>
         <dependencies>
@@ -35,7 +68,11 @@
             <plugin>
                 <groupId>io.thorntail</groupId>
                 <artifactId>thorntail-maven-plugin</artifactId>
-                <version>${version.thorntail}</version>
+                <!-- Está usando uma versão beta do plugin.
+                Para isto, é necessário a inclusão da tag <pluginRepositories>
+                para informar a URL do repositório de onde baixar tais versões. 
+                -->
+                <version>${version.thorntail.plugin}</version>
         
                 <executions>
                     <execution>
@@ -44,7 +81,23 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+                
+                <configuration>
+                    <!-- Em https://docs.thorntail.io/4.0.0-SNAPSHOT/#_modes -->
+                    <mode>thin</mode>
+
+                    <!-- 
+                    https://docs.thorntail.io/4.0.0-SNAPSHOT/#_formats 
+                    Gerar arquivos em um diretório, no lugar de um jar ou zip.
+                    Assim é possível fazer hot deploy (hot reload)
+                    depois de ter incluído o thorntail-devtools.
+                    
+                    Para isto funciona, também é preciso definir a variável de
+                    ambiente THORNTAIL_DEV_MODE=reload.
+                    -->
+                    <!-- <format>dir</format> -->
+                </configuration>                
+            </plugin>            
         </plugins>
     </build>
 
@@ -83,21 +136,14 @@
         </dependency>
         
         <dependency>
-            <!-- Cria um hollow (oco) jar no lugar de um uber jar.
-            Um hollow jar contém apenas o app server e as dependências, não a aplicação.
-            Um uber jar contém tudo e não precisa de nenhum jar separado para rodar. 
-            
-            Neste caso, para rodar a app, deve-se executar:
-            
-            java -jar rest-server-thorntail.jar rest-server.war
+            <!-- Hot deploy (Hot reload)
+            https://docs.thorntail.io/4.0.0-SNAPSHOT/#devtools
             -->
-            <groupId>io.thorntail.servers</groupId>
-            <!-- [full|web|microprofile] -->
-            <artifactId>microprofile</artifactId>
-            
-            <version>${version.thorntail}</version>
-        </dependency>
-
+            <groupId>io.thorntail</groupId>
+            <artifactId>thorntail-devtools</artifactId>
+            <version>${version.thorntail.plugin}</version>
+        </dependency>        
+                
         <!-- Dependências da aplicação 
         Observe que dependências como o Hibernate são adicionadas 
         como "provided", indicando que o Thorntail é quem fornecerá as mesmas.

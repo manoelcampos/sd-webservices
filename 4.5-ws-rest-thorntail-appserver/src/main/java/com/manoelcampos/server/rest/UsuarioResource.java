@@ -26,6 +26,12 @@ public class UsuarioResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Usuario findById(@PathParam("id") long id) {
+        if(true){
+            Usuario usuario = new Usuario();
+            usuario.setNome("2");
+            return usuario;
+        }
+        
         Usuario usuario = dao.findById(id);
         if(usuario == null){
             //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.

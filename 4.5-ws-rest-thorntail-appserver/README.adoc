@@ -16,27 +16,35 @@ endif::[]
 
 == Executar o Projeto
 
-Após compilar o projeto, na pasta target será gerado um pacote `rest-server-thorntail.jar`.
-Este pacote contém o App Server Thorntail, sua aplicação e todas as dependências
-e configurações necessárias.
+Existem diferentes maneiras de executar este projeto.
 
-Para iniciar a aplicação no ambiente de desenvolvimento (juntamente com o App Server), basta
-executar o comando `mvn thorntail:run`.
+== Ambiente de Desenvolvimento 
+
+Basta executar o comando `mvn thorntail:run`.
+Se quiser rodar a aplicação de forma mais rápida a partir de um IDE como o NetBeans,
+basta executar a classe `StartThorntail` no pacote `com.manoelcampos.server.config`. 
+As configurações do classpath já foram feitas para o NetBeans (ver arquivo nbactions.xml).
+
+== Ambiente de Produção
 
 Se estiver no ambiente de produção, basta digitar `java -jar rest-server-thorntail.jar`,
 assim como inicia-se qualquer jar executável em Java.
 
 No entanto, qualquer uma das duas opções requer que que a aplicação seja empacotada (criado um jar e/ou war), o que é um processo lento. Se desejar rodar a aplicação diretamente
-das classes compiladas na pasta `target`, basta executar `java -cp target/rest-server-thorntail.jar:target/classes org.wildfly.swarm.bootstrap.Main`.
+das classes compiladas na pasta `target`, basta executar:
+`java -cp target/rest-server-thorntail.jar:target/classes org.wildfly.swarm.bootstrap.Main`.
 
-Se quiser rodar a aplicação de forma mais rápida a partir de um IDE como o NetBeans,
-basta executar a classe `StartThorntail` no pacote `com.manoelcampos.server.config`. 
-As configurações do classpath já foram
-feitas para o NetBeans (ver arquivo nbactions.xml).
+== Acessando o Sistema
+
+Após executar, a aplicação poderá ser acessada em http://localhost:8080
 
 Tenha certeza de rodar a aplicação com no máximo o JDK 8.
 Os servidores de aplicação normalmente ainda não funcionam com versões mais novas do JDK.
 
 == Referências
 
+- http://docs.thorntail.io
 - https://github.com/thorntail/thorntail-examples/tree/master/jpa-jaxrs-cdi/jpa-jaxrs-cdi-jta
+- https://www.phillip-kruger.com/post/hollowjars_deploymentscanner_and_why_wildflyswarm_is_cool/
+- https://docs.thorntail.io/4.0.0-SNAPSHOT/#devtools[Hot deploy (Hot reload)]
+- http://fxapps.blogspot.com/2018/05/thorntail-development-mode-no-more.html
