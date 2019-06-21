@@ -1,0 +1,97 @@
+:source-highlighter: highlightjs
+:numbered:
+
+= Exemplo de Aplicação REST utilizando Java com API JAX-RS e o framework Quarkus
+
+Este projeto usar o framework https://quarkus.io[Quakus] para compilar e executar uma aplicação
+java que disponibiliza serviços REST utilizando a API JAX-RS.
+O Quarkus é o que há de mais recente e moderno para o desenvolvimento e execução
+de diferentes aplicações Java, como Java EE (atualmente Jakarta EE).
+
+O Quarkus permite compilar o código Java para código nativo usando a https://graalvm.org[GraalVM]
+no lugar da JVM. A GraalVM é também um projeto recente que permite compilar aplicações em uma infinidade de linguagens para código nativo. A lista de linguagens é extensa e inclui JavaScript (e Node.js), Python, Ruby, Java, Scala, Groovy, Kotlin, etc.
+
+== Requisitos
+
+Tenha certeza de rodar a aplicação com no máximo o JDK 8.
+Os servidores de aplicação normalmente ainda não funcionam com versões mais recentes do JDK.
+
+É necessário Maven 3.5.3 ou superior. Mesmo as versões mais atuais do NetBeans
+vêm com versões antigas do Maven. Por isso, ao tentar compilar o projeto no NetBeans
+você pode receber o erro abaixo:
+
+```
+com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) Error injecting: private org.eclipse.aether.spi.log.Logger org.apache.maven.repository.internal.DefaultVersionRangeResolver.logger
+```
+
+O maven pode ser instalado, por exemplo em distribuições Linux baseadas em Debian,
+com `sudo apt-get install maven`. 
+
+No Windows, pode-se baixar um arquivo `apache-maven-x.x.x-bin.zip` em https://maven.apache.org/download.cgi. Você também pode configurar o https://docs.microsoft.com/en-us/windows/wsl/install-win10[Windows Subsystem for Linux] e assim poderá baixar aplicações usando o mesmo comando Linux acima.
+
+No NetBeans então é possível indicar que deseja-se utilizar uma versão do Maven instalada no sistema, no lugar de usar a que vem com o NetBeans. 
+Para isto, acesse as preferências do NetBeans, depois a aba Java >> Maven e informe o caminho do comando "mvn" no campo "Maven Home".
+
+== Criação do Projeto
+
+Toda a estrutura do projeto foi criada com o comando abaixo, como indicado no site do https://quarkus.io/guides/getting-started-guide[Quarkus]:
+
+```bash
+mvn io.quarkus:quarkus-maven-plugin:0.17.0:create \
+    -DprojectGroupId=org.acme \
+    -DprojectArtifactId=getting-started \
+    -DclassName="org.acme.quickstart.GreetingResource" \
+    -Dpath="/hello"
+```
+
+== Executar o Projeto
+
+== Ambiente de Desenvolvimento 
+
+=== Iniciando o servidor
+
+Você pode iniciar o servidor com sua aplicação de diferentes maneiras:
+
+- Usando o script mvnw incluído durante a criação do projeto: `./mvnw compile quarkus:dev`.
+- Ou simplesmente clicando no botão Play em IDEs como o NetBeans, pois foi incluído o plugin maven exec para executar o comando acima mais facilmente.
+
+=== Atualizando o projeto sem reiniciar o servidor
+
+Bem, atualizar o projeto no servidor em execução e ver as alterações que você fez na sua aplicação é realmente complicado com o Quarkus: você precisa apenas salvar o projeto e boom: normalmente em menos de 1 segundo a aplicação estará rodando com as novas alterações 😱🚀😁.
+
+Não é à toa que o slogan do Quarkus é "Supersonic Subatomic Java".
+
+=== Acessando a aplicação
+
+Se você estiver habituado a usar servidores como o GlassFish no NetBeans, sabe que ao clicar no botão Play, o projeto é compilado e executado, abrindo o navegador automaticamente.
+Usando o Quarkus isso não ocorrerá.
+Você deve abrir o navegador você mesmo. Neste caso, a aplicação estará disponível
+em http://localhost:8080. Observe que não há um caminho adicional com o nome da aplicação no final da URL, pois a aplicação executa na raiz do servidor.
+
+== Ambiente de Produção
+
+Para enviar a aplicação para um ambiente de produção você deve executar `./mvnw clean package` em um terminal na raiz do projeto para criar o que chamamos de fat jar: um jar contendo a aplicação e o servidor que executará a própria aplicação.
+
+Com o comando acima o pacote `target/rest-app-quarkus-server-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação usando:
+
+`java -jar target/rest-app-quarkus-server-runner.jar`
+
+Assim, este é o pacote que precisa enviar para o ambiente de produção. 
+Possíveis bibliotecas que a aplicação não estão sendo empacotadas neste jar.
+Posteriormente atualizo o projeto para fazer isso.
+
+=== Container Docker
+
+Para gerar um container docker com tudo necessário para executar a aplicação, é preciso ter a https://graalvm.org[GraalVM] e o https://www.docker.com/products/docker-desktop[Docker] instalados. 
+O Docker precisa estar rodando na máquina de desenvolvimento para construir a imagem do container.
+Em seguida, basta executar o comando abaixo:
+
+- `./mvnw package -Pnative -Dnative-image.docker-build=true`
+
+== Referências
+
+- https://quarkus.io
+- https://quarkus.io/guides/getting-started-guide
+- https://quarkus.io/guides/building-native-image-guide

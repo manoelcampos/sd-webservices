@@ -36,7 +36,7 @@ Mais uma vez, isso pode ser feito de diferentes maneiras:
   como o GlassFish). Assim, ao clicar no botão "Play" (ou pressionar F6), o comando
   acima será executado.
 
-=== Executando a aplicação
+=== Acessando a aplicação
 
 Se você estiver habituado a usar servidores como o GlassFish no NetBeans, sabe que ao clicar no botão Play, o projeto é compilado e executado, abrindo o navegador automaticamente.
 Com servidores de aplicação como o Thorntail isso não ocorrerá.
