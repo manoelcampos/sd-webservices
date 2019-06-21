@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <!-- Inicia o servidor Thorntail com sua app -->
+            <actionName>CUSTOM-thorntail:run</actionName>
+            <displayName>clean thorntail:run</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>thorntail:run</goal>
+            </goals>
+        </action>
+        <action>
+            <!-- Faz o Hot Deploy da sua aplicação,
+            sem precisar reiniciar o servidor. -->
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>war</packaging>
+                <packaging>ear</packaging>
+                <packaging>ejb</packaging>
+            </packagings>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>redeploy</activatedProfile>
+            </activatedProfiles>
+        </action>
+    </actions>

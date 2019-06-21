@@ -1,18 +1,7 @@
 :source-highlighter: highlightjs
-:imagesdir: images
 :numbered:
-:unsafe:
 
-ifdef::env-github[]
-:outfilesuffix: .adoc
-:caution-caption: :fire:
-:important-caption: :exclamation:
-:note-caption: :paperclip:
-:tip-caption: :bulb:
-:warning-caption: :warning:
-endif::[]
-
-= Exemplo de Servidor REST utilizando Java com API JAX-RS e Thorntail App Server
+= Exemplo de Aplicação REST utilizando Java com API JAX-RS e Servidor de Aplicação Thorntail
 
 == Executar o Projeto
 
@@ -20,10 +9,10 @@ Existem diferentes maneiras de executar este projeto.
 
 == Ambiente de Desenvolvimento 
 
-Basta executar o comando `mvn thorntail:run`.
-Se quiser rodar a aplicação de forma mais rápida a partir de um IDE como o NetBeans,
-basta executar a classe `StartThorntail` no pacote `com.manoelcampos.server.config`. 
-As configurações do classpath já foram feitas para o NetBeans (ver arquivo nbactions.xml).
+Para iniciar o Throntail com nossa aplicação, basta executar o comando `mvn clean thorntail:run`.
+Como foi incluído o arquivo link:nbactions.xml[nbactions.xml], tal comando pode
+ser executado clicando-se com o botão direito sobre o nome do projeto no NetBeans
+e escolhendo "Run Maven >> clean thorntail:run".
 
 == Ambiente de Produção
 
@@ -45,6 +34,4 @@ Os servidores de aplicação normalmente ainda não funcionam com versões mais 
 
 - http://docs.thorntail.io
 - https://github.com/thorntail/thorntail-examples/tree/master/jpa-jaxrs-cdi/jpa-jaxrs-cdi-jta
-- https://www.phillip-kruger.com/post/hollowjars_deploymentscanner_and_why_wildflyswarm_is_cool/
 - https://docs.thorntail.io/4.0.0-SNAPSHOT/#devtools[Hot deploy (Hot reload)]
-- http://fxapps.blogspot.com/2018/05/thorntail-development-mode-no-more.html
