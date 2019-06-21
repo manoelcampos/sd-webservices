@@ -22,6 +22,18 @@ public class UsuarioResource {
     @Inject 
     private DAO<Usuario> dao;
     
+    /**
+     * Um método de exemplo que recebe o nome de uma pessoa e diz olá pra ela.
+     * @param name Nome da pessoa
+     * @return uma mensagem de olá
+     */
+    @GET
+    @Path("hello/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello(@PathParam("name") String name) {
+        return "Hello " + name;
+    }
+    
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
