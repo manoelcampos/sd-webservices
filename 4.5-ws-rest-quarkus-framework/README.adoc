@@ -86,9 +86,31 @@ Posteriormente atualizo o projeto para fazer isso.
 
 Para gerar um container docker com tudo necessário para executar a aplicação, é preciso ter a https://graalvm.org[GraalVM] e o https://www.docker.com/products/docker-desktop[Docker] instalados. 
 O Docker precisa estar rodando na máquina de desenvolvimento para construir a imagem do container.
-Em seguida, basta executar o comando abaixo:
+Em seguida, basta executar os comandos abaixo:
 
-- `./mvnw package -Pnative -Dnative-image.docker-build=true`
+```bash
+./mvnw package -Pnative -Dnative-image.docker-build=true
+docker build . -f src/main/docker/Dockerfile.native -t com.manoelcampos/rest-app-quarkus-server
+```
+
+Observe que `com.manoelcampos/rest-app-quarkus-server` é apenas uma tag para categorizar
+a imagem docker criada. Você pode usar qualquer nome que quiser, seguindo o padrão
+desenvolvedor/descricao_imagem. Para aplicações java, um padrão comum é nome_do_pacote/nome_aplicacao.
+
+Agora, executando `docker image list` será exibida a lista de imagens docker disponíveis.
+A imagem `com.manoelcampos/rest-app-quarkus-server` (no caso do exemplo acima) deverá ser exibida na lista.
+
+Você pode ver as imagens criadas com:
+
+`docker image list`
+
+Uma imagem com o nome "com.manoelcampos/rest-app-quarkus-server" (ou qualquer nome que você tenha dado) deve aparecer na lista. Note que a imagem docker contendo a aplicação inteira, incluindo o servidor, terá menos de 40MB. Só a versão básica do GlassFish tem 60MB. O GlassFish Full tem cerca de 120MB.
+
+Você pode iniciar um container a partir de tal imagem com o comando:
+
+`docker run -i --rm -p 8080:8080 com.manoelcampos/rest-app-quarkus-server`
+
+A partir de então, a aplicação poderá ser acessada de dentro do container pelo endereço http://localhost:8080.
 
 == Referências
 

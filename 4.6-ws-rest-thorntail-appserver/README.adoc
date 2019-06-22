@@ -1,6 +1,17 @@
 :source-highlighter: highlightjs
 :numbered:
 
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+IMPORTANT: Você possivelmente não vai querer usar Thorntail depois de ver o link:../4.5-ws-rest-quarkus-framework[projeto usando Quarkus]. Mas se realmente deseja usar Thorntail, este projeto pode ser útil.
+
 = Exemplo de Aplicação REST utilizando Java com API JAX-RS e Servidor de Aplicação Thorntail
 
 == Requisitos

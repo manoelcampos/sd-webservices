@@ -83,7 +83,7 @@ image::remove-glassfish4.gif[]
 
 Veja que nas propriedades do servidor é possível verificar em que pasta ele foi instalado (normalmente a pasta de instalação do NetBeans). Caso deseje, pode remover tal pasta também.
 
-Baixe o GlassFish 5 https://javaee.github.io/glassfish/download[aqui]. Tenha certeza de baixar a versão completa "GlassFish 5.0 - Full Platform", que possui todas as especificações do JavaEE. Basta descompactar em qualquer lugar que será criada uma pasta `glassfish5`. 
+Baixe o Eclipse GlassFish 5 https://projects.eclipse.org/projects/ee4j.glassfish/downloads[aqui]. Tenha certeza de baixar a versão completa "GlassFish 5 - Full Platform", que possui todas as especificações do JavaEE. Basta descompactar em qualquer lugar que será criada uma pasta `glassfish5`. 
 
 Como vamos usar o MySQL como banco de dados, precisaremos do MySQL Connector J, driver JBDC do MySQL (que vai ser utilizado internamente para acesso ao BD). Baixe o driver no https://dev.mysql.com/downloads/connector/j/[site oficial].
 
