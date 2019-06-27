@@ -54,15 +54,36 @@ em http://localhost:8080. Observe que não há um caminho adicional com o nome d
 
 == Ambiente de Produção
 
-Para enviar a aplicação para um ambiente de produção você deve executar `./mvnw clean package` em um terminal na raiz do projeto para criar o que chamamos de fat jar: um jar contendo a aplicação e o servidor que executará a própria aplicação.
+Para enviar a aplicação para um ambiente de produção você deve executar `./mvnw clean package` em um terminal na raiz do projeto para criar o que chamamos de uber jar. Este é um tipo de jar que contém tudo que a aplicação precisa para executar:
 
-Com o comando acima o pacote `target/rest-app-quarkus-server-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação usando:
+- a própria aplicação;
+- o servidor que executará a aplicação;
+- todas as dependências necessárias (arquivos jar das bibliotecas usadas).
 
-`java -jar target/rest-app-quarkus-server-runner.jar`
+Com o comando acima o pacote `target/rest-app-quarkus-server-jpa-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação usando:
 
-Assim, este é o pacote que precisa enviar para o ambiente de produção. 
-Possíveis bibliotecas que a aplicação não estão sendo empacotadas neste jar.
-Posteriormente atualizo o projeto para fazer isso.
+`java -jar target/rest-app-quarkus-server-jpa-runner.jar`
+
+Assim, este é o *único* pacote que precisa enviar para o ambiente de produção. 
+
+=== Configurações no Ambiente de Produção.
+
+Observe que o arquivo link:src/main/resources/application.properties[application.properties]
+possui variáveis iniciando com "dev." e outras com "prod.", para indicar,
+respectivamente, configurações para o ambiente de desenvolvimento e ambiente de produção.
+Normalmente teremos configurações distintas em tais ambientes, como:
+
+- diferente IP do servidor de banco de dados e posssivelmente diferente usuário e senha;
+- diferente porta para rodar o servidor de aplicação (normalmente 8080 em desenvolvimento e 80 em produção).
+
+Assim, para indicar que desejar rodar a aplicação no ambiente de produção, existem diversas maneiras,
+como criar uma variável de ambiente como `export QUARKUS_PROFILE=prod`. Em linux, tal variável pode ser definida em arquivos como o ~/.bashrc, ~/.bash_profile ou ~/profile. Assim, ao logar no servidor com o usuário que usou para editar algum destes arquivos, a variável já será criada.
+
+Após editar um dos arquivos acima, é preciso executá-lo para a variável ser de fato criada.
+Se incluiu a linha acima no arquivo ~/profile, deverá executar `source ~/profile` para isto.
+Observe que o arquivo já deve existir. Se não, tente um dos outros arquivos exibidos.
+
+Ao rodar a aplicação com o comando mostrado no fim da seção anterior, ela vai entender que está no ambiente de produção e usar as configurações apropriadas a partir do arquivo application.properties.
 
 === Container Docker
 
@@ -101,3 +122,4 @@ A partir de então, a aplicação poderá ser acessada de dentro do container pe
 - https://quarkus.io/guides/building-native-image-guide
 - https://quarkus.io/guides/rest-json-guide
 - https://lordofthejars.github.io/quarkus-cheat-sheet/
+- https://quarkus.io/guides/application-configuration-guide
