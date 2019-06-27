@@ -7,15 +7,19 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/getting-started .
+# docker build -f src/main/docker/native.Dockerfile -t com.manoelcampos/rest-app-quarkus-native .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/getting-started
+# docker run -i --rm -p 8080:8080 com.manoelcampos/rest-app-quarkus-native
 #
 ###
+
 #FROM registry.access.redhat.com/ubi8/ubi-minimal
-FROM cescoffier/native-base:latest
+#FROM cescoffier/native-base:latest
+#FROM scratch
+FROM alpine:latest
+
 WORKDIR /work/
 
 #Using the cescoffier/native-base:latest, it builds a image with no specific distro.
@@ -27,6 +31,6 @@ COPY ["target/*-runner", "/work/application"]
 #Using the no-distro cescoffier/native-base:latest image, there is no chmod
 #RUN ["chmod", "775", "/work"]
 
-EXPOSE 8080
-CMD ["echo", "Open your browser at http://localhost:8080 to access the application"]
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+EXPOSE 80
+CMD ["echo", "Open your browser at http://localhost to access the application"]
+CMD ["./application"]

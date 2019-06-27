@@ -72,7 +72,7 @@ Em seguida, basta executar os comandos abaixo:
 
 ```bash
 ./mvnw package -Pnative -Dnative-image.docker-build=true
-docker build . -f src/main/docker/Dockerfile.native -t com.manoelcampos/rest-app-quarkus-server
+docker build -f src/main/docker/native.Dockerfile -t com.manoelcampos/rest-app-quarkus-server .
 ```
 
 Observe que `com.manoelcampos/rest-app-quarkus-server` é apenas uma tag para categorizar
@@ -100,3 +100,4 @@ A partir de então, a aplicação poderá ser acessada de dentro do container pe
 - https://quarkus.io/guides/getting-started-guide
 - https://quarkus.io/guides/building-native-image-guide
 - https://quarkus.io/guides/rest-json-guide
+- https://lordofthejars.github.io/quarkus-cheat-sheet/

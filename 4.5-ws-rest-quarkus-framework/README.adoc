@@ -117,3 +117,4 @@ A partir de então, a aplicação poderá ser acessada de dentro do container pe
 - https://quarkus.io
 - https://quarkus.io/guides/getting-started-guide
 - https://quarkus.io/guides/building-native-image-guide
+- https://lordofthejars.github.io/quarkus-cheat-sheet/
