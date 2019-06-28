@@ -22,8 +22,13 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ClienteResource {
+    /**
+     * Devido ao uso da GraalVM para geração de aplicações nativas (que não existem
+     * a JVM para executar), a recomendação do Quarkus é declarar atributos
+     * injetados com visibilidade package.
+     */
     @Inject 
-    private DAO<Cliente> dao;
+    DAO<Cliente> dao;
         
     @GET
     @Path("{id}")

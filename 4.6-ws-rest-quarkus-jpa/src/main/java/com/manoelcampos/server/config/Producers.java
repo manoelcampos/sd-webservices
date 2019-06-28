@@ -19,9 +19,14 @@ import javax.persistence.PersistenceContext;
  * @author Manoel Campos da Silva Filho
  */
 public class Producers {
+    /**
+     * Devido ao uso da GraalVM para geração de aplicações nativas (que não existem
+     * a JVM para executar), a recomendação do Quarkus é declarar atributos
+     * injetados com visibilidade package.
+     */
     @Produces 
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
     
     @Produces
     public <T extends Cadastro> DAO<T> getDao(InjectionPoint ip){

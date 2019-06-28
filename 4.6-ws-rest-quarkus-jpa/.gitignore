@@ -1,3 +1,5 @@
+aws.sh
+
 #Private keys
 *.pem
 

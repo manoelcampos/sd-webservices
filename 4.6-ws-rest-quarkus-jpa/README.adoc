@@ -3,14 +3,23 @@
 
 = Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus
 
-Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o projeto anterior link:../4.5-ws-rest-quarkus-framework[aqui]. Este projeto é baseado na estrutura do anterior.
+Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do anterior.
 
 Esta versão inclui suporte à injeção de dependências com CDI e acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate.
 
 == Requisitos
 
 Além do JDK 8 e Maven 3.5.3 ou superior, este projeto usa o MySQL/MariaDB como banco de dados.
-No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido.
+No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido. Para isto, é preciso incluir o driver JDBC para o seu banco a partir das dependências do Quarkus no pom.xml. Para o MySQL/MariaDB foi incluído:
+
+```xml
+    <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-jdbc-mariadb</artifactId>
+    </dependency>
+```
+
+As configurações da conexão devem ser definidas em arquivo link:src/main/resources/application.properties[application.properties].
 
 == Detalhes do Projeto
 
@@ -87,33 +96,22 @@ Ao rodar a aplicação com o comando mostrado no fim da seção anterior, ela va
 
 === Container Docker
 
-Para gerar um container docker com tudo necessário para executar a aplicação, é preciso ter a https://graalvm.org[GraalVM] e o https://www.docker.com/products/docker-desktop[Docker] instalados. 
-O Docker precisa estar rodando na máquina de desenvolvimento para construir a imagem do container.
-Em seguida, basta executar os comandos abaixo:
+Para gerar containers com tudo necessário para executar a aplicação, e assim facilitar a implantação (deploy) dela, precisamos do  https://www.docker.com/products/docker-desktop[Docker] **instalado** e **rodando** na máquina de desenvolvimento. 
+Existem duas formas de gerar um container docker, como mostrado a seguir.
+
+==== Gerando Container incluindo a JVM
+
+Como nossa aplicação é Java, por padrão, precisamos da JVM para executá-la.
+Podemos gerar um container com a JVM instalada e com o uber jar da nossa aplicação (que inclui o app, o servidor e as dependências) executando os comandos abaixo:
 
 ```bash
-./mvnw package -Pnative -Dnative-image.docker-build=true
-docker build -f src/main/docker/native.Dockerfile -t com.manoelcampos/rest-app-quarkus-server .
+`./mvnw clean package`
+docker build -f src/main/docker/jvm.Dockerfile -t com.manoelcampos/rest-app-quarkus-server .
 ```
 
-Observe que `com.manoelcampos/rest-app-quarkus-server` é apenas uma tag para categorizar
-a imagem docker criada. Você pode usar qualquer nome que quiser, seguindo o padrão
-desenvolvedor/descricao_imagem. Para aplicações java, um padrão comum é nome_do_pacote/nome_aplicacao.
+==== Gerando Container incluindo a aplicação compilada nativamente
 
-Agora, executando `docker image list` será exibida a lista de imagens docker disponíveis.
-A imagem `com.manoelcampos/rest-app-quarkus-server` (no caso do exemplo acima) deverá ser exibida na lista.
-
-Você pode ver as imagens criadas com:
-
-`docker image list`
-
-Uma imagem com o nome "com.manoelcampos/rest-app-quarkus-server" (ou qualquer nome que você tenha dado) deve aparecer na lista. Note que a imagem docker contendo a aplicação inteira, incluindo o servidor, terá menos de 40MB. Só a versão básica do GlassFish tem 60MB. O GlassFish Full tem cerca de 120MB.
-
-Você pode iniciar um container a partir de tal imagem com o comando:
-
-`docker run -i --rm -p 8080:8080 com.manoelcampos/rest-app-quarkus-server`
-
-A partir de então, a aplicação poderá ser acessada de dentro do container pelo endereço http://localhost:8080.
+Pelo fato desta aplicação utilizar uma série de bibliotecas, existem muitos detalhes e questões relacionadas à compilação de uma aplicação nativa para execução diretamente pelo sistema operacional (sem a JVM). Por isso, as informações foram incluídas em um link:docker-native-app.adoc[documento à parte].
 
 == Referências
 

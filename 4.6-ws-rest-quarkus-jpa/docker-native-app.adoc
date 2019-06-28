@@ -1,0 +1,50 @@
+:source-highlighter: highlightjs
+
+= Gerando Container incluindo a aplicação compilada nativamente
+
+Apesar de ser extremamente simples criar um container incluindo tudo que a aplicação precisa para executar, facilitando sua implantação, a instalação da JVM aumenta o tamanho do container. Além disso, aplicações nativas (executadas diretamente pelo SO) podem ser mais eficientes que aplicações Java (que precisam ser interpretadas pela JVM antes de executar). 
+
+O Quarkus permite o uso da https://graalvm.org[GraalVM] para compilar a aplicação Java para código nativo e assim executá-la sem precisar da JVM. Mas como a GraalVM é um projeto novo e em andamento, https://github.com/oracle/graal/issues/979[existe muito ainda a ser melhorado em questões de desempenho]. Por fim, apesar desta aplicação ser simples, ela esta aplicação uma uma série de bibliotecas que tornam o processo de compilação de uma aplicação nativa extremamente lento e que consome bastante memória. O processo pode levar dezenas de minutos para finalizar.
+
+A partir da versão 0.18.0 do Quarkus, é necessária a GraalVM 19.0.2 ou superior e a instalação do aplicativo `native-image`:
+
+```bash
+$GRAALVM_HOME/bin/gu install native-image
+```
+
+onde `$GRAALVM_HOME` é a pasta onde você instalou a GraalVM.
+
+Com a GraalVM instalada, para gerar um container incluindo a aplicação compilada nativamente, basta executar:
+
+```bash
+./mvnw clean package -Pnative -Dnative-image.docker-build=true
+docker build -f src/main/docker/native.Dockerfile -t com.manoelcampos/rest-app-quarkus-server .
+```
+
+Se ao executar o último comando ocorrer erro de falta de memória, você precisará
+aumentar a quantidade de RAM que a JVM/JDK pode usar executando:
+
+```bash
+export MAVEN_OPTS="-Xmx6G";
+```
+
+Neste caso, estou indicando que a JVM/JDK pode usar até 6GB de RAM. 
+
+Observe que `com.manoelcampos/rest-app-quarkus-server` é apenas uma tag para categorizar
+a imagem docker criada. Você pode usar qualquer nome que quiser, seguindo o padrão
+desenvolvedor/descricao_imagem. Para aplicações java, um padrão comum é nome_do_pacote/nome_aplicacao.
+
+Agora, executando `docker image list` será exibida a lista de imagens docker disponíveis.
+A imagem `com.manoelcampos/rest-app-quarkus-server` (no caso do exemplo acima) deverá ser exibida na lista.
+
+Você pode ver as imagens criadas com:
+
+`docker image list`
+
+Uma imagem com o nome "com.manoelcampos/rest-app-quarkus-server" (ou qualquer nome que você tenha dado) deve aparecer na lista. Note que a imagem docker contendo a aplicação inteira, incluindo o servidor, terá menos de 40MB. Só a versão básica do GlassFish tem 60MB. O GlassFish Full tem cerca de 120MB.
+
+Você pode iniciar um container a partir de tal imagem com o comando:
+
+`docker run -i --rm -p 8080:8080 com.manoelcampos/rest-app-quarkus-server`
+
+A partir de então, a aplicação poderá ser acessada de dentro do container pelo endereço http://localhost:8080.
