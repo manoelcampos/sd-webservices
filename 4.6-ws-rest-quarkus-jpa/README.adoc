@@ -78,7 +78,7 @@ Assim, este é o *único* pacote que precisa enviar para o ambiente de produçã
 === Configurações no Ambiente de Produção.
 
 Observe que o arquivo link:src/main/resources/application.properties[application.properties]
-possui variáveis iniciando com "dev." e outras com "prod.", para indicar,
+possui variáveis iniciando com "%dev." e outras com "%prod.", para indicar,
 respectivamente, configurações para o ambiente de desenvolvimento e ambiente de produção.
 Normalmente teremos configurações distintas em tais ambientes, como:
 
