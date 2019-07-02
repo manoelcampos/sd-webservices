@@ -1,6 +1,15 @@
 :source-highlighter: highlightjs
 :numbered:
 
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
 = Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus
 
 Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do anterior.
@@ -12,12 +21,14 @@ Esta versão inclui suporte à injeção de dependências com CDI e acesso à ba
 Além do JDK 8 e Maven 3.5.3 ou superior, este projeto usa o MySQL/MariaDB como banco de dados.
 No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido. Para isto, é preciso incluir o driver JDBC para o seu banco a partir das dependências do Quarkus no pom.xml. Para o MySQL/MariaDB foi incluído:
 
-```xml
+[source,xml]
+----
+
     <dependency>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-jdbc-mariadb</artifactId>
     </dependency>
-```
+----
 
 As configurações da conexão devem ser definidas em arquivo link:src/main/resources/application.properties[application.properties].
 
@@ -69,49 +80,39 @@ Para enviar a aplicação para um ambiente de produção você deve executar `./
 - o servidor que executará a aplicação;
 - todas as dependências necessárias (arquivos jar das bibliotecas usadas).
 
-Com o comando acima o pacote `target/rest-app-quarkus-server-jpa-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação usando:
-
-`java -jar target/rest-app-quarkus-server-jpa-runner.jar`
-
-Assim, este é o *único* pacote que precisa enviar para o ambiente de produção. 
+Com o comando acima o pacote `target/rest-app-quarkus-server-jpa-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação. Assim, este é o *único* pacote que precisa ser enviado para o ambiente de produção. 
 
 === Configurações no Ambiente de Produção.
 
 Observe que o arquivo link:src/main/resources/application.properties[application.properties]
-possui variáveis iniciando com "%dev." e outras com "%prod.", para indicar,
+possui variáveis iniciando com `%dev.` e outras com `%prod.`, para indicar,
 respectivamente, configurações para o ambiente de desenvolvimento e ambiente de produção.
 Normalmente teremos configurações distintas em tais ambientes, como:
 
 - diferente IP do servidor de banco de dados e posssivelmente diferente usuário e senha;
 - diferente porta para rodar o servidor de aplicação (normalmente 8080 em desenvolvimento e 80 em produção).
 
-Assim, para indicar que desejar rodar a aplicação no ambiente de produção, existem diversas maneiras,
-como criar uma variável de ambiente como `export QUARKUS_PROFILE=prod`. Em linux, tal variável pode ser definida em arquivos como o ~/.bashrc, ~/.bash_profile ou ~/profile. Assim, ao logar no servidor com o usuário que usou para editar algum destes arquivos, a variável já será criada.
+Assim, para indicar que deseja rodar a aplicação no ambiente de produção, existem diversas maneiras,
+como criar uma variável de ambiente com o comando `export QUARKUS_PROFILE=prod`. Em linux, tal comando pode ser incluído em arquivos como o `~/.bashrc`, `~/.bash_profile` ou `~/.profile`. Assim, ao logar no servidor com o usuário que usou para editar algum destes arquivos, a variável já será criada.
+
+IMPORTANT: Certifique-se que o arquivo que você escolheu acima realmente existe. Se não existir, tente um dos outros arquivos.
 
 Após editar um dos arquivos acima, é preciso executá-lo para a variável ser de fato criada.
-Se incluiu a linha acima no arquivo ~/profile, deverá executar `source ~/profile` para isto.
-Observe que o arquivo já deve existir. Se não, tente um dos outros arquivos exibidos.
+Se incluiu a linha acima no arquivo `~/.profile`, deverá executar `source ~/.profile` para isto.
 
-Ao rodar a aplicação com o comando mostrado no fim da seção anterior, ela vai entender que está no ambiente de produção e usar as configurações apropriadas a partir do arquivo application.properties.
+Como no arquivo application.properties foi definido que no ambiente de produção
+será usada a porta 80, no Linux é preciso usar root para executar a aplicação:
+
+[source,bash]
+----
+sudo java -jar rest-app-quarkus-server-jpa-runner.jar
+----
+
+Ao rodar a aplicação agora, ela vai entender que está no ambiente de produção e usar as configurações de tal ambiente a partir do arquivo application.properties.
 
 === Container Docker
 
-Para gerar containers com tudo necessário para executar a aplicação, e assim facilitar a implantação (deploy) dela, precisamos do  https://www.docker.com/products/docker-desktop[Docker] **instalado** e **rodando** na máquina de desenvolvimento. 
-Existem duas formas de gerar um container docker, como mostrado a seguir.
-
-==== Gerando Container incluindo a JVM
-
-Como nossa aplicação é Java, por padrão, precisamos da JVM para executá-la.
-Podemos gerar um container com a JVM instalada e com o uber jar da nossa aplicação (que inclui o app, o servidor e as dependências) executando os comandos abaixo:
-
-```bash
-`./mvnw clean package`
-docker build -f src/main/docker/jvm.Dockerfile -t com.manoelcampos/rest-app-quarkus-server .
-```
-
-==== Gerando Container incluindo a aplicação compilada nativamente
-
-Pelo fato desta aplicação utilizar uma série de bibliotecas, existem muitos detalhes e questões relacionadas à compilação de uma aplicação nativa para execução diretamente pelo sistema operacional (sem a JVM). Por isso, as informações foram incluídas em um link:docker-native-app.adoc[documento à parte].
+Para gerar containers com tudo necessário para executar a aplicação, e assim facilitar a implantação (deploy) dela, veja esta link:docker-container.adoc[página]. 
 
 == Referências
 
