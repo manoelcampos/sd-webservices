@@ -114,6 +114,11 @@ Ao rodar a aplicação agora, ela vai entender que está no ambiente de produç�
 
 Para gerar containers com tudo necessário para executar a aplicação, e assim facilitar a implantação (deploy) dela, veja esta link:docker-container.adoc[página]. 
 
+== Implantando Aplicação no Amazon Web Services (AWS)
+
+Uma breve lista de comandos para conectar aos serviços AWS e implantar
+a aplicação é mostrada nesta link:aws.adoc[página].
+
 == Referências
 
 - https://quarkus.io
