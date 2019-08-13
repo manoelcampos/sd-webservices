@@ -256,6 +256,8 @@ Isto indica que só podemos injetar objetos que estejam marcados com alguma anot
 
 Para não sermos obrigados a anotar todas as classes que desejamos criar objetos por injeção e assim tornar mais fácil o uso de CDI, podemos alterar o valor do atributo para `all`. Assim, poderemos injetar objetos de qualquer classe que desejarmos.
 
+IMPORTANT: Em aplicações com uma grande quantidade de classes, usar `bean-discovery-mode=all` pode causar https://weld.cdi-spec.org/news/2016/10/25/tip3-performance/[maior consumo de memória e maior tempo de inicialização].
+
 === Adicionando dependências Maven
 
 O arquivo `pom.xml` (criando automaticamente quando criamos o projeto Maven) é onde indicamos quais são as dependências do nosso projeto. Como estamos utilizando o Hibernate, precisamos incluir as dependências a seguir dentro da tag `<dependencies>`:
