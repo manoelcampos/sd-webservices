@@ -592,7 +592,9 @@ de linha de comando em Java que consome tal serviço.
 
 Testar um método REST que usa o verbo HTTP GET é trivial: basta digitar a URL do método, passando os devidos parâmetros.
 No entanto, quando um método usa outro verbo HTTP, não conseguimos testar desta forma.
-Se você não quiser criar uma aplicação cliente apenas para testar o serviço, existem várias alternativas para isto, como mostrado a seguir.
+Se você não quiser criar uma aplicação cliente apenas para testar o serviço, existem várias alternativas para isto.
+A forma mais simples, que não requer instalação de nenhuma ferramenta adicional, é usando o 
+site https://postwoman.io
 
 === Usando a ferramenta de linha de comando curl
 
