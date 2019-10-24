@@ -676,3 +676,8 @@ public boolean delete(@PathParam("id") long id) {
 Pronto, agora pode usar alguma das formas mostradas anteriormente para testar qualquer método do serviço REST implementado.
 Espero que o tutorial tenha sido completo e esclarecedor.
 Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado, basta criar uma nova issue https://github.com/manoelcampos/sistemas-distribuidos/issues[aqui].
+
+
+== Download do código fonte
+
+O código fonte do projeto pode ser acessado na pasta 4.4-ws-rest-cadastro link:https://github.com/manoelcampos/sd-webservices[deste repositório].
