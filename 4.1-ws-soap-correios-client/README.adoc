@@ -35,4 +35,4 @@ Como indicado na apresentação link:../webservices.pptx[webservices.pptx], SOAP
 Os projetos SOAP disponibilizados aqui visam apenas mostrar o básico, caso você
 precise manter um sistema que ainda usa tal protocolo.
 
-Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java para acesso a um Web Service) nem são mais disponibilizadas nas versões atuais da plataforma Java como a 11.
+Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java para acesso a um Web Service) nem são mais disponibilizadas em versões atuais da plataforma Java como a 11 em diante.
