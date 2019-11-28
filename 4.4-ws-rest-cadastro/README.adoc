@@ -51,6 +51,9 @@ sudo apt-get install mysql-server
 
 Se estiver usando Windows ou macOS, pode baixar o instalador do
 MySQL Server Community https://dev.mysql.com/downloads/mysql/[aqui].
+Certifique-se de conferir qual a versão do MySQL está sendo baixada,
+pois existem diferenças de configuração para as versões 5 e 8 que serão discutidas adiante.
+No Linux, basta digitar `mysql --version` no terminal.
 
 ==== Criando o Banco de Dados
 

@@ -12,7 +12,7 @@ ssh -i sua-chave-privada.pem usuario@ip-ou-dominio-vm
 ----
 
 As informações concretas para conectar à uma determinada VM podem ser obtidas
-clicando-se com o botão direito na sua VM no AWS Console na web.
+clicando-se com o botão direito na sua VM, acessando sua conta do http://console.aws.amazon.com[AWS].
 
 image:conectar-vm-amazon.png[]
 
@@ -25,5 +25,5 @@ Podemos usar o comando SSH Copy (scp) para isso:
 scp -i sua-chave-privada.pem arquivos-origem-maquina-local usuario@ip-ou-dominio-vm:/pasta-destino-maquina-remota/
 ----
 
-== AWS ECS: Docker Container
+// == AWS ECS: Docker Container
 

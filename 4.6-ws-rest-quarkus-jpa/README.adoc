@@ -12,9 +12,7 @@ endif::[]
 
 = Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.6-ws-rest-quarkus-jpa[zip])
 
-Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do anterior.
-
-Esta versão inclui suporte à injeção de dependências com CDI e acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate.
+Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do outro. Esta versão inclui suporte à injeção de dependências com CDI e acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate.
 
 == Requisitos
 
@@ -50,29 +48,29 @@ Assim, veja que no link:pom.xml[pom.xml] que tais bibliotecas usadas foram forne
 
 == Executar o Projeto
 
-== Ambiente de Desenvolvimento 
+=== Ambiente de Desenvolvimento 
 
-=== Iniciando o servidor
+==== Iniciando o servidor
 
 Você pode iniciar o servidor com sua aplicação de diferentes maneiras:
 
 - Usando o script mvnw incluído durante a criação do projeto: `./mvnw compile quarkus:dev`.
 - Ou simplesmente clicando no botão Play em IDEs como o NetBeans, pois foi incluído o plugin maven exec para executar o comando acima mais facilmente.
 
-=== Atualizando o projeto sem reiniciar o servidor
+==== Atualizando o projeto sem reiniciar o servidor
 
 Bem, atualizar o projeto no servidor em execução e ver as alterações que você fez na sua aplicação é realmente complicado com o Quarkus: você precisa apenas salvar o projeto e boom: normalmente em menos de 1 segundo a aplicação estará rodando com as novas alterações 😱🚀😁.
 
 Não é à toa que o slogan do Quarkus é "Supersonic Subatomic Java".
 
-=== Acessando a aplicação
+==== Acessando a aplicação
 
 Se você estiver habituado a usar servidores como o GlassFish no NetBeans, sabe que ao clicar no botão Play, o projeto é compilado e executado, abrindo o navegador automaticamente.
 Usando o Quarkus isso não ocorrerá.
 Você deve abrir o navegador você mesmo. Neste caso, a aplicação estará disponível
 em http://localhost:8080. Observe que não há um caminho adicional com o nome da aplicação no final da URL, pois a aplicação executa na raiz do servidor.
 
-== Ambiente de Produção
+=== Ambiente de Produção
 
 Para enviar a aplicação para um ambiente de produção você deve executar `./mvnw clean package` em um terminal na raiz do projeto para criar o que chamamos de uber jar. Este é um tipo de jar que contém tudo que a aplicação precisa para executar:
 
@@ -82,7 +80,7 @@ Para enviar a aplicação para um ambiente de produção você deve executar `./
 
 Com o comando acima o pacote `target/rest-app-quarkus-server-jpa-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação. Assim, este é o *único* pacote que precisa ser enviado para o ambiente de produção. 
 
-=== Configurações no Ambiente de Produção.
+==== Configurações no Ambiente de Produção.
 
 Observe que o arquivo link:src/main/resources/application.properties[application.properties]
 possui variáveis iniciando com `%dev.` e outras com `%prod.`, para indicar,
@@ -110,11 +108,11 @@ sudo java -jar rest-app-quarkus-server-jpa-runner.jar
 
 Ao rodar a aplicação agora, ela vai entender que está no ambiente de produção e usar as configurações de tal ambiente a partir do arquivo application.properties.
 
-=== Container Docker
+==== Container Docker
 
 Para gerar containers com tudo necessário para executar a aplicação, e assim facilitar a implantação (deploy) dela, veja esta link:docker-container.adoc[página]. 
 
-== Implantando Aplicação no Amazon Web Services (AWS)
+=== Implantando Aplicação no Amazon Web Services (AWS)
 
 Uma breve lista de comandos para conectar aos serviços AWS e implantar
 a aplicação é mostrada nesta link:aws.adoc[página].
