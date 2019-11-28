@@ -16,7 +16,7 @@ ifdef::env-github[]
 IMPORTANT: ACESSE O TUTORIAL ONLINE http://manoelcampos.com/sd-webservices/4.4-ws-rest-cadastro/[NESTE LINK]. **O ACESSO DIRETAMENTE PELO GITHUB NÃO PERMITE A EXIBIÇÃO DE VÍDEOS.**
 endif::[]
 
-= Desenvolvimento Web Services REST em Java utilizando JAX-RS com JPA e CDI no NetBeans
+= Desenvolvimento Web Services REST em Java utilizando JAX-RS com JPA e CDI no NetBeans (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.4-ws-rest-cadastro[zip])
 por Manoel Campos da Silva Filho
 
 REST se tornou o padrão de fato para o desenvolvimento de Web Services (WS's) há alguns anos, em oposição ao protocolo SOAP padronizado pela W3C.

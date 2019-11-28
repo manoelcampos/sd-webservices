@@ -1,7 +1,7 @@
 :source-highlighter: highlightjs
 :numbered:
 
-= Exemplo de Aplicação REST utilizando Java com API JAX-RS e o framework Quarkus
+= Exemplo de Aplicação REST utilizando Java com API JAX-RS e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.5-ws-rest-quarkus-framework[zip])
 
 Este projeto usar o framework https://quarkus.io[Quakus] para compilar e executar uma aplicação
 java que disponibiliza serviços REST utilizando a API JAX-RS.

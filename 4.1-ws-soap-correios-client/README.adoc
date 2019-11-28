@@ -1,4 +1,4 @@
-= Aplicação cliente para consumir Web Service SOAP de busca de CEP
+= Aplicação cliente para consumir Web Service SOAP de busca de CEP (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.1-ws-soap-correios-client[zip])
 
 Este é um projeto Java convencional (Java Application)
 que utilizou o assistente do NetBeans para criar uma classe cliente de Web Service (Web Service Client)
