@@ -12,35 +12,24 @@ endif::[]
 
 = Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.6-ws-rest-quarkus-jpa[zip])
 
-Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do outro. Esta versão inclui suporte à injeção de dependências com CDI e acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate.
+Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do outro. Esta versão inclui acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate
+por meio da biblioteca https://quarkus.io/guides/hibernate-orm-panache[Panache].
+Tal biblioteca praticamente elimina a necessidade de criarmos DAOs para implementar o acesso ao BD,
+além de reduzir drasticamente a quantidade de código das classes de negócio.
+Veja a documentação das classes no pacote `model` para mais detalhes.
 
 == Requisitos
 
-Além do JDK 8 e Maven 3.5.3 ou superior, este projeto usa o MySQL/MariaDB como banco de dados.
-No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido. Para isto, é preciso incluir o driver JDBC para o seu banco a partir das dependências do Quarkus no pom.xml. Para o MySQL/MariaDB foi incluído:
-
-[source,xml]
-----
-
-    <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-jdbc-mariadb</artifactId>
-    </dependency>
-----
+Além do JDK 8 ou 11 e Maven 3.5.3 ou superior, este projeto usa um banco de dados em memória do Apache H2, recriando e populando o banco a cada vez que a aplicação é iniciada.
+No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido. Para isto, é preciso incluir o driver JDBC para o seu banco a partir das dependências do Quarkus no pom.xml. 
 
 As configurações da conexão devem ser definidas em arquivo link:src/main/resources/application.properties[application.properties].
 
 == Detalhes do Projeto
 
-Foi incluído o arquivo link:src/main/webapp/WEB-INF/beans.xml[beans.xml] para configurar o CDI. Tal arquivo não é necessário desde o Java EE 7 e de fato o Quarkus parece estar ignorando o mesmo (ou ele não foi colocado na pasta correta).
-
 As configurações do DataSource para conexão com o banco foram feitas no arquivo link:src/main/resources/application.properties[application.properties] e não no persistence.xml. Apesar de ser possível utilizar o persistence.xml como usual, você não pode incluir os dois arquivos no projeto. De qualuqer forma, a configuração pelo application.properties é muito mais simples.
 
-Veja que como o servidor será embutido na nossa aplicação, precisamos indicar qual o banco de dados será usado, incluíndo uma dependência para isso no pom.xml. Neste caso o banco de dados usado pode ser o MariaDB ou MySQL. Assim foi incluída a dependência `quarkus-jdbc-mariadb`. Observe que, apesar de tal dependência ser para o MariaDB, ela funciona com o MySQL (pois o MariaDB é apenas um fork do MySQL).
-Mas para isto, foi preciso definir no application.properties que desejamos usar o dialeto SQL do MySQL.
-Neste caso, como estou utilizando MySQL 8, foi definida a classe `org.hibernate.dialect.MySQL8Dialect` no application.properties. Se estiver usando uma versão diferente do MySQL, pode consultar o nome da classe que implementa o dialeto da sua versão https://docs.jboss.org/hibernate/stable/orm/javadocs/org/hibernate/dialect/package-summary.html[aqui].
-
-Certifique-se de criar o banco com o nome indicado no application.properties e indicar o nome de usuário e senha do servidor de banco de dados, além de outras possíveis configurações para o seu banco.
+Veja que como o servidor será embutido na nossa aplicação, precisamos indicar qual o banco de dados será usado, incluíndo uma dependência para isso no pom.xml. Neste caso o banco de dados usado foi o Apache H2 em memória. Assim foi incluída a dependência `quarkus-jdbc-h2`. 
 
 Por fim, que as dependências que normalmente incluímos em um projeto JavaEE com Hibernate seriam javax.javaee-web-api, org.hibernate.javax.persistence e possivelmente outras dependências relacionadas a API JAX-RS e processamento de JSON. Ao usar um framework como o Quarkus que embute um servidor na própria aplicação, tais dependências não devem ser incluídas do modo tradicional (usando os pacotes fornecidos pelo desenvolvedor destas bibliotecas), mas sim as versões de tais bibliotecas disponibilizadas por ferramentas como o Quarkus.
 
@@ -80,33 +69,14 @@ Para enviar a aplicação para um ambiente de produção você deve executar `./
 
 Com o comando acima o pacote `target/rest-app-quarkus-server-jpa-runner.jar` é criado e a partir dele podemos iniciar o servidor com a aplicação. Assim, este é o *único* pacote que precisa ser enviado para o ambiente de produção. 
 
-==== Configurações no Ambiente de Produção.
-
-Observe que o arquivo link:src/main/resources/application.properties[application.properties]
-possui variáveis iniciando com `%dev.` e outras com `%prod.`, para indicar,
-respectivamente, configurações para o ambiente de desenvolvimento e ambiente de produção.
-Normalmente teremos configurações distintas em tais ambientes, como:
-
-- diferente IP do servidor de banco de dados e posssivelmente diferente usuário e senha;
-- diferente porta para rodar o servidor de aplicação (normalmente 8080 em desenvolvimento e 80 em produção).
-
-Assim, para indicar que deseja rodar a aplicação no ambiente de produção, existem diversas maneiras,
-como criar uma variável de ambiente com o comando `export QUARKUS_PROFILE=prod`. Em linux, tal comando pode ser incluído em arquivos como o `~/.bashrc`, `~/.bash_profile` ou `~/.profile`. Assim, ao logar no servidor com o usuário que usou para editar algum destes arquivos, a variável já será criada.
-
-IMPORTANT: Certifique-se que o arquivo que você escolheu acima realmente existe. Se não existir, tente um dos outros arquivos.
-
-Após editar um dos arquivos acima, é preciso executá-lo para a variável ser de fato criada.
-Se incluiu a linha acima no arquivo `~/.profile`, deverá executar `source ~/.profile` para isto.
-
-Como no arquivo application.properties foi definido que no ambiente de produção
-será usada a porta 80, no Linux é preciso usar root para executar a aplicação:
+Para executar a aplicação em ambiente de produção, basta o comando a seguir:
 
 [source,bash]
 ----
-sudo java -jar rest-app-quarkus-server-jpa-runner.jar
+java -jar rest-app-quarkus-server-jpa-runner.jar
 ----
 
-Ao rodar a aplicação agora, ela vai entender que está no ambiente de produção e usar as configurações de tal ambiente a partir do arquivo application.properties.
+Ao rodar a aplicação agora, ela vai entender que está no ambiente de produção e usar possíveis configurações de tal ambiente a partir do arquivo application.properties.
 
 ==== Container Docker
 

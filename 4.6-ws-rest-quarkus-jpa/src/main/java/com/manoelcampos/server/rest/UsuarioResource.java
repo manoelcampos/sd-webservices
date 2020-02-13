@@ -1,18 +1,10 @@
 package com.manoelcampos.server.rest;
 
-import com.manoelcampos.server.dao.DAO;
+import com.manoelcampos.server.model.Cliente;
 import com.manoelcampos.server.model.Usuario;
-import javax.inject.Inject;
+
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -21,19 +13,10 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioResource {
-    /**
-     * Devido ao uso da GraalVM para geração de aplicações nativas
-     * (que não existem a JVM para executar),
-     * a recomendação do Quarkus é declarar atributos injetados com
-     * visibilidade package.
-     */
-    @Inject 
-    DAO<Usuario> dao;
-    
     @GET
     @Path("{id}")
     public Usuario findById(@PathParam("id") long id) {
-        Usuario usuario = dao.findById(id);
+        Usuario usuario = Usuario.findById(id);
         if(usuario == null){
             //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
             throw new WebApplicationException(Response.Status.NOT_FOUND);        
@@ -45,7 +28,7 @@ public class UsuarioResource {
     @GET
     @Path("cpf/{cpf : \\d{11}}")
     public Usuario findByCpf(@PathParam("cpf") String cpf) {
-        Usuario usuario = dao.findByField("cpf", cpf);
+        Usuario usuario = Usuario.find("cpf", cpf).firstResult();
         if(usuario == null){
             //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
             throw new WebApplicationException(Response.Status.NOT_FOUND);        
@@ -56,23 +39,28 @@ public class UsuarioResource {
     
     @POST
     public long insert(Usuario usuario) {
-        return dao.save(usuario);
+        Usuario.persist(usuario);
+        return usuario.id;
     }
     
     @PUT
     public boolean update(Usuario usuario) {
-        return dao.save(usuario) > 0;
-    }
+        if(Usuario.update(usuario))
+            return true;
+
+        //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
+        throw new WebApplicationException(Response.Status.NOT_FOUND);    }
 
     @DELETE
     @Path("{id}")
     public boolean delete(@PathParam("id") long id) {
-        Usuario usuario = dao.findById(id);
+        Usuario usuario = Usuario.findById(id);
         if(usuario == null){
             //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
-        return dao.delete(usuario);
+        usuario.delete();
+        return true;
     }
 }

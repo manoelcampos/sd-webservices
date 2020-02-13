@@ -1,15 +1,16 @@
 package com.manoelcampos.server.model;
 
-import java.io.Serializable;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 /**
  * Representa um endereço de um cliente.
- * 
+ * Veja a classe {@link Cidade} para detalhes
+ * importantíssimos de como tais classes de negócio foram modeladas.
+ *
  * <p>Como existe um relacionamento 1..N entre Cliente e Endereco,
  * ao acessar o serviço que obtém um cliente em formato JSON
  * ocorrer o erro StackOverflow, pois o relacionamento entre estas duas
@@ -24,61 +25,25 @@ import javax.persistence.ManyToOne;
  * @author Manoel Campos da Silva Filho
  */
 @Entity
-public class Endereco implements Cadastro, Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String logradouro;
-    
+public class Endereco  extends PanacheEntity implements Serializable {
+    public String logradouro;
+
     @ManyToOne()
-    private Cliente cliente;
-    
+    public Cliente cliente;
+
     @ManyToOne
-    private Cidade cidade;
-    
-    @Override
-    public long getId() {
-        return id;
-    }
+    public Cidade cidade;
 
-    @Override
-    public void setId(long id) {
-        this.id = id;
-    }
+    public static boolean update(Endereco endereco) {
+        Endereco existente = Endereco.findById(endereco.id);
+        if(existente != null){
+            existente.logradouro = endereco.logradouro;
+            existente.cliente = endereco.cliente;
+            existente.cidade = endereco.cidade;
+            existente.persist();
+            return true;
+        }
 
-    /**
-     * @return the logradouro
-     */
-    public String getLogradouro() {
-        return logradouro;
+        return false;
     }
-
-    /**
-     * @param logradouro the logradouro to set
-     */
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    /**
-     * @return the cidade
-     */
-    public Cidade getCidade() {
-        return cidade;
-    }
-
-    /**
-     * @param cidade the cidade to set
-     */
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
-    }
-
-    /**
-     * @param cliente the cliente to set
-     */
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
 }

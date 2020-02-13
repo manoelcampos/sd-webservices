@@ -1,19 +1,12 @@
 package com.manoelcampos.server.rest;
 
-import com.manoelcampos.server.dao.DAO;
 import com.manoelcampos.server.model.Cliente;
+import com.manoelcampos.server.model.Endereco;
+
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,13 +15,6 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ClienteResource {
-    /**
-     * Devido ao uso da GraalVM para geração de aplicações nativas (que não existem
-     * a JVM para executar), a recomendação do Quarkus é declarar atributos
-     * injetados com visibilidade package.
-     */
-    @Inject 
-    DAO<Cliente> dao;
         
     @GET
     @Path("{id}")
@@ -38,34 +24,57 @@ public class ClienteResource {
         ao serviço REST, a melhor prática é fazer um join para buscar
         tais endereços e evitar o erro LazyInitializationException.
         https://vladmihalcea.com/the-best-way-to-handle-the-lazyinitializationexception/.
-        Observe que é usado um left join para, caso o cliente não tenh endereços,
-        ele seja retornado assim mesmo.*/
-        String jpql = "select c from Cliente c left join fetch c.enderecos where c.id = :id";
-        TypedQuery<Cliente> query = dao.createQuery(jpql);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        Observe que é usado um left join para, caso o cliente não tenha endereços,
+        ele seja retornado assim mesmo.
+        */
+        String jpql = "select c from Cliente c left join fetch c.enderecos where c.id = ?1";
+        Cliente cliente = Cliente.find(jpql, id).firstResult();
+        if(cliente == null){
+            //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        /* Como existe um relacionamento bi-direcional entre Cliente e Endereco,
+        quando a biblioteca JAX-RS for converter um objeto Cliente para JSON,
+        vai ocorrer loop infinito.
+        Para evitar isso, a forma mais fácil é apagar o cliente de dentro do endereço.
+        Como estamos fazendo isso apenas nos objetos em memória, isto não afeta o cadastro.
+        As anotações @JsonIgnoreProperties e @JsonIgnore da biblioteca Jackson
+        (no Quarkus: quarkus-resteasy-jackson) deveriam funcionar, mas não estão.
+         */
+        for (Endereco endereco : cliente.enderecos) {
+            endereco.cliente = null;
+        }
+
+        return cliente;
     }
 
     @POST
     public long insert(Cliente cliente) {
-        return dao.save(cliente);
+        Cliente.persist(cliente);
+        return cliente.id;
     }
     
     @PUT
     public boolean update(Cliente cliente) {
-        return dao.save(cliente) > 0;
+        if(Cliente.update(cliente))
+            return true;
+
+        //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 
     @DELETE
     @Path("{id}")
     public boolean delete(@PathParam("id") long id) {
-        Cliente cliente = dao.findById(id);
+        Cliente cliente = Cliente.findById(id);
         if(cliente == null){
             //Se o objeto não for encontrado no BD, retorna código HTTP 404: página não encontrada.
-            throw new WebApplicationException(Response.Status.NOT_FOUND);        
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        
-        return dao.delete(cliente);
+
+        cliente.delete();
+        return true;
     }
     
     
