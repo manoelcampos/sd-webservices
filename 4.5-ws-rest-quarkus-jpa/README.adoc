@@ -12,11 +12,11 @@ endif::[]
 
 = Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.5-ws-rest-quarkus-jpa[zip])
 
-Este projeto usar o framework https://quarkus.io[Quakus] para compilar e executar uma aplicação
+Este projeto usa o framework https://quarkus.io[Quakus] para compilar e executar uma aplicação
 java web que disponibiliza serviços REST utilizando a API JAX-RS.
 
 O Quarkus é o que há de mais recente e moderno para o desenvolvimento e execução
-de diferentes aplicações Java, como Java EE (atualmente Jakarta EE).
+de  aplicações Jakarta EE (antigo Java EE).
 Ele permite compilar o código Java para código nativo usando a https://graalvm.org[GraalVM]
 no lugar da JVM. A GraalVM é também um projeto recente que permite compilar aplicações em uma infinidade de linguagens para código nativo. A lista de linguagens é extensa e inclui JavaScript (e Node.js), Python, Ruby, Java, Scala, Groovy, Kotlin, etc.
 
@@ -53,7 +53,7 @@ Para isto, acesse as preferências do NetBeans, depois a aba Java >> Maven e inf
 O projeto usa um banco de dados em memória do Apache H2, recriando e populando o banco a cada vez que a aplicação é iniciada.
 No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido. Para isto, é preciso incluir o driver JDBC para o seu banco a partir das dependências do Quarkus no pom.xml. 
 
-As configurações da conexão devem ser definidas em arquivo link:src/main/resources/application.properties[application.properties].
+As configurações da conexão devem ser definidas no arquivo link:src/main/resources/application.properties[application.properties].
 
 == Criação do Projeto
 
