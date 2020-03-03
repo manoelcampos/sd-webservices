@@ -10,7 +10,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-= Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.6-ws-rest-quarkus-jpa[zip])
+= Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.5-ws-rest-quarkus-jpa[zip])
 
 Este projeto usar o framework https://quarkus.io[Quakus] para compilar e executar uma aplicação
 java web que disponibiliza serviços REST utilizando a API JAX-RS.
