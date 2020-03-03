@@ -12,7 +12,15 @@ endif::[]
 
 = Exemplo de Aplicação REST utilizando Java com JAX-RS, CDI, JPA e o framework Quarkus (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.6-ws-rest-quarkus-jpa[zip])
 
-Se você chegou até aqui e não sabe o que é https://quarkus.io[Quarkus], veja o link:../4.5-ws-rest-quarkus-framework[projeto anterior]. Este projeto é baseado na estrutura do outro. Esta versão inclui acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate
+Este projeto usar o framework https://quarkus.io[Quakus] para compilar e executar uma aplicação
+java web que disponibiliza serviços REST utilizando a API JAX-RS.
+
+O Quarkus é o que há de mais recente e moderno para o desenvolvimento e execução
+de diferentes aplicações Java, como Java EE (atualmente Jakarta EE).
+Ele permite compilar o código Java para código nativo usando a https://graalvm.org[GraalVM]
+no lugar da JVM. A GraalVM é também um projeto recente que permite compilar aplicações em uma infinidade de linguagens para código nativo. A lista de linguagens é extensa e inclui JavaScript (e Node.js), Python, Ruby, Java, Scala, Groovy, Kotlin, etc.
+
+O projeto inclui acesso à banco de dados com a Java Persistence API (JPA) utilizando o framework Hibernate
 por meio da biblioteca https://quarkus.io/guides/hibernate-orm-panache[Panache].
 Tal biblioteca praticamente elimina a necessidade de criarmos DAOs para implementar o acesso ao BD,
 além de reduzir drasticamente a quantidade de código das classes de negócio.
@@ -20,10 +28,37 @@ Veja a documentação das classes no pacote `model` para mais detalhes.
 
 == Requisitos
 
-Além do JDK 8 ou 11 e Maven 3.5.3 ou superior, este projeto usa um banco de dados em memória do Apache H2, recriando e populando o banco a cada vez que a aplicação é iniciada.
+=== Ferramentas
+
+O projeto requer JDK 8 ou 11 e Maven 3.5.3 ou superior.
+Mesmo as versões mais atuais do NetBeans vêm com versões antigas do Maven. 
+Por isso, ao tentar compilar o projeto no NetBeans você pode receber o erro abaixo:
+
+```
+com.google.inject.ProvisionException: Unable to provision, see the following errors:
+
+1) Error injecting: private org.eclipse.aether.spi.log.Logger org.apache.maven.repository.internal.DefaultVersionRangeResolver.logger
+```
+
+O maven pode ser instalado, por exemplo em distribuições Linux baseadas em Debian,
+com `sudo apt-get install maven`. 
+
+No Windows, pode-se baixar um arquivo `apache-maven-x.x.x-bin.zip` em https://maven.apache.org/download.cgi. Você também pode configurar o https://docs.microsoft.com/en-us/windows/wsl/install-win10[Windows Subsystem for Linux] e assim poderá baixar aplicações usando o mesmo comando Linux acima.
+
+No NetBeans então é possível indicar que deseja-se utilizar uma versão do Maven instalada no sistema, no lugar de usar a que vem com o NetBeans. 
+Para isto, acesse as preferências do NetBeans, depois a aba Java >> Maven e informe o caminho do comando "mvn" no campo "Maven Home".
+
+=== Banco de Dados
+
+O projeto usa um banco de dados em memória do Apache H2, recriando e populando o banco a cada vez que a aplicação é iniciada.
 No entanto, você pode utilizar qualquer banco que desejar, desde que faça as configurações adequadas para o banco escolhido. Para isto, é preciso incluir o driver JDBC para o seu banco a partir das dependências do Quarkus no pom.xml. 
 
 As configurações da conexão devem ser definidas em arquivo link:src/main/resources/application.properties[application.properties].
+
+== Criação do Projeto
+
+Toda a estrutura deste projeto foi criada automaticamente. A forma mais fácil de fazer isso é por meio do site http://code.quarkus.io. Assim, tal site pode ser o ponto de partida para a criação de novos projetos.
+
 
 == Detalhes do Projeto
 
