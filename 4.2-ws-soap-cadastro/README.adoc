@@ -1,5 +1,32 @@
+:source-highlighter: highlightjs
+:imagesdir: images
+:icons: font
+:allow-uri-read:
+:safe: unsafe
 :numbered:
+:listing-caption: Listagem
+:experimental:
+:figure-caption: Figura
+
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
 = Cadastro com Banco de Dados MySQL utilizando Web Service SOAP (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.2-ws-soap-cadastro[zip])
+
+[WARNING]
+====
+Como indicado na apresentação link:../webservices.pptx[webservices.pptx], SOAP é um protocolo obsoleto.
+Os projetos SOAP disponibilizados aqui visam apenas mostrar o básico, caso você
+precise manter um sistema que ainda usa tal protocolo.
+
+Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java para acesso a um Web Service) nem são mais disponibilizadas em versões atuais da plataforma Java como a 11 em diante.
+====
 
 Esta aplicação cria um servidor SOAP que fornece um Web Service para
 permitir a realização de cadastros em um banco de dados MySQL.
@@ -119,11 +146,3 @@ Se tudo correr bem, o NetBeans abrirá o navegador no endereço http://localhost
 A página index.html incluída possui um link para a página de teste do Web Service.
 Tal página também pode ser acessada pelo NetBeans, clicando com o botão
 direito em qualquer Web Service disponibilizado na pasta Web Services.
-
-= Aviso
-
-Como indicado na apresentação link:../webservices.pptx[webservices.pptx], SOAP é um protocolo obsoleto.
-Os projetos SOAP disponibilizados aqui visam apenas mostrar o básico, caso você
-precise manter um sistema que ainda usa tal protocolo.
-
-Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java para acesso a um Web Service) nem são mais disponibilizadas em versões atuais da plataforma Java como a 11 em diante.

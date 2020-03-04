@@ -1,4 +1,32 @@
+:source-highlighter: highlightjs
+:imagesdir: images
+:icons: font
+:allow-uri-read:
+:safe: unsafe
+:numbered:
+:listing-caption: Listagem
+:experimental:
+:figure-caption: Figura
+
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
 = Aplicação cliente para consumir Web Service SOAP de busca de CEP (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.1-ws-soap-correios-client[zip])
+
+[WARNING]
+====
+Como indicado na apresentação link:../webservices.pptx[webservices.pptx], SOAP é um protocolo obsoleto.
+Os projetos SOAP disponibilizados aqui visam apenas mostrar o básico, caso você
+precise manter um sistema que ainda usa tal protocolo.
+
+Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java para acesso a um Web Service) nem são mais disponibilizadas em versões atuais da plataforma Java como a 11 em diante.
+====
 
 Este é um projeto Java convencional (Java Application)
 que utilizou o assistente do NetBeans para criar uma classe cliente de Web Service (Web Service Client)
@@ -28,11 +56,3 @@ A documentação do Web Service está disponível http://www.corporativo.correio
 Os correios ainda fornecem outros Web Services SOAP para https://correios.com.br/solucoes-empresariais/comercio-eletronico/palestras-correios-1/pdf/ManualdeImplementacaodoCalculoRemotodePrecosePrazos.pdf/view[consulta de preços e prazos], mas não são gratuitos.
 
 Outros como https://www.correios.com.br/a-a-z/pdf/rastreamento-de-objetos/manual_rastreamentoobjetosws.pdf/view[serviço de rastreamento de encomendas] pode ser utilizado gratuitamente com o usuário *ECT* e senha *SRO*.
-
-= Aviso
-
-Como indicado na apresentação link:../webservices.pptx[webservices.pptx], SOAP é um protocolo obsoleto.
-Os projetos SOAP disponibilizados aqui visam apenas mostrar o básico, caso você
-precise manter um sistema que ainda usa tal protocolo.
-
-Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java para acesso a um Web Service) nem são mais disponibilizadas em versões atuais da plataforma Java como a 11 em diante.
