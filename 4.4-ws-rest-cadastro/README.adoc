@@ -2,6 +2,8 @@
 :imagesdir: images
 :numbered:
 :unsafe:
+:icons: font
+:allow-uri-read:
 
 ifdef::env-github[]
 :outfilesuffix: .adoc
