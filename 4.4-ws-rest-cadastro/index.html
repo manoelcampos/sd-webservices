@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
 <meta name="author" content="por Manoel Campos da Silva Filho">
-<title>Desenvolvimento Web Services REST em Java utilizando JAX-RS com JPA e CDI no NetBeans</title>
+<title>Desenvolvimento Web Services REST em Java utilizando JAX-RS com JPA e CDI no NetBeans (zip)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,10 +436,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Desenvolvimento Web Services REST em Java utilizando JAX-RS com JPA e CDI no NetBeans</h1>
+<h1>Desenvolvimento Web Services REST em Java utilizando JAX-RS com JPA e CDI no NetBeans (<a href="https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.4-ws-rest-cadastro">zip</a>)</h1>
 <div class="details">
 <span id="author" class="author">por Manoel Campos da Silva Filho</span><br>
 </div>
@@ -479,18 +480,18 @@ Isto se deve a diversos fatores como:</p>
 <h2 id="_ferramentas_necessárias">1. Ferramentas Necessárias</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para este projeto vamos utilizar as versões estáveis mais recentes das ferramentas apresentadas, como listado abaixo:</p>
+<p>Para este projeto vamos utilizar as seguintes ferramentas:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>JDK 1.8</p>
+<p>JDK 1.8 (a maioria dos servidores de aplicação ainda não suporta versões mais recentes do JDK)</p>
 </li>
 <li>
-<p>IDE NetBeans 8.2 para Java EE</p>
+<p><a href="http://netbeans.apache.org">IDE NetBeans 11</a></p>
 </li>
 <li>
-<p>Servidor de aplicação GlassFish 5 Full Platform (informações de configuração a seguir)</p>
+<p>Servidor de aplicação GlassFish 5 (a ser mostrado como instalar)</p>
 </li>
 </ol>
 </div>
@@ -500,7 +501,7 @@ Isto se deve a diversos fatores como:</p>
 <div class="sect2">
 <h3 id="_mysql_server">1.1. MySQL Server</h3>
 <div class="paragraph">
-<p>Nossa aplicação servidora utilizará um banco de dados (BD) MySQL, apesar que qualquer outro banco pode ser utilizado. Se estiver utilizando Linux, como Ubuntu, basta fazer o download do MySQL Server via apt-get com o comando abaixo:</p>
+<p>Nossa aplicação servidora utilizará um banco de dados MySQL, apesar que qualquer outro banco pode ser utilizado. Se estiver utilizando Linux, como Ubuntu, basta fazer o download do MySQL Server via apt-get com o comando abaixo:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -509,88 +510,56 @@ Isto se deve a diversos fatores como:</p>
 </div>
 <div class="paragraph">
 <p>Se estiver usando Windows ou macOS, pode baixar o instalador do
-MySQL Server Community <a href="https://dev.mysql.com/downloads/mysql/">aqui</a>.</p>
+MySQL Server Community <a href="https://dev.mysql.com/downloads/mysql/">aqui</a>.
+Certifique-se de conferir qual a versão do MySQL está sendo baixada,
+pois existem diferenças de configuração para as versões 5 e 8 que serão discutidas adiante.
+No Linux, basta digitar <code>mysql --version</code> no terminal.</p>
 </div>
 <div class="sect3">
 <h4 id="_criando_o_banco_de_dados">1.1.1. Criando o Banco de Dados</h4>
 <div class="paragraph">
-<p>Utilize o NetBeans para criar o banco de dados chamado <code>cadastro-rest</code> para o nosso sistema, acessando a aba "Services",
-como mostrado neste <a href="https://youtu.be/g0R11_1Fv1I">vídeo</a>.</p>
+<p>Utilize o NetBeans para criar o banco de dados chamado <code>cadastro-rest</code> para o nosso sistema, acessando a aba "Services".</p>
+</div>
+<div class="paragraph">
+<p>O processo é mostrado no vídeo a seguir.</p>
 </div>
 <div class="videoblock">
 <div class="content">
 <iframe width="800" height="600" src="https://www.youtube.com/embed/g0R11_1Fv1I?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 </div>
-<div class="paragraph">
-<p>Não precisaremos criar as tabelas manualmente, como veremos a seguir.</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Não precisaremos criar as tabelas manualmente, como veremos a seguir.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_glassfish_5">1.2. GlassFish 5</h3>
 <div class="paragraph">
-<p>Vamos utilizar o GlassFish 5 por ser a última versão até o momento de elaboração deste tutorial. Por conta de já termos utilizado tal servidor de aplicação no <a href="4.2-ws-soap-cadastro">projeto SOAP</a>, uma vez que a versão 4.2 já disponível no NetBeans apresenta problemas com SOAP e o Hibernate 5.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Important</div>
-</td>
-<td class="content">
-Não é preciso utilizar um servidor de aplicação completo como o GlassFish para este projeto. Um Web Container como <a href="http://tomee.apache.org">TomEE microprofile</a> é suficiente, uma vez que ele implementa as APIs JAX-RS, JPA, JTA e CDI que estamos usando. Já o conhecido <a href="http://tomcat.apache.org">Tomcat</a> não implementa tais APIs, pois ele é apenas um Servlet Container, como pode ser visto <a href="http://tomee.apache.org/comparison.html">aqui</a>. Mais detalhes de quais APIs diferentes servidores implementam pode ser visto nesta excelente <a href="https://youtu.be/iBJ8FlUA3ok">palestra</a> (slides disponíveis <a href="https://www.slideshare.net/agoncal/just-enough-app-server">aqui</a>).
-</td>
-</tr>
-</table>
+<p>Vamos utilizar o GlassFish 5 por ser a última versão até o momento de elaboração deste tutorial.</p>
 </div>
 <div class="paragraph">
-<p>Abaixo são mostrados os passos para instalar o GlassFish 5, que também podem
-ser acompanhados neste <a href="https://youtu.be/Z87oeoaAxDI">vídeo</a>.</p>
+<p>O vídeo a seguir mostra os passos para instalar o GlassFish 5.</p>
 </div>
 <div class="videoblock">
 <div class="content">
-<iframe width="800" height="600" src="https://www.youtube.com/embed/Z87oeoaAxDI?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="800" height="600" src="https://www.youtube.com/embed/_Af4RK9UvRw?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
-</div>
-<div class="paragraph">
-<p>Como vamos usar o GlassFish 5, vamos remover o GlassFish 4 do NetBeans.
-Este é um passo opcional. Você pode ter quantos servidores de aplicação
-desejar. Mas vamos remover a versão 4 para evitar qualquer confusão.
-Para isto, basta ir na aba "Services" no lado esquerdo da janela principal do NetBeans para localizar e remover o GlassFish 4, como mostrado abaixo.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/remove-glassfish4.gif" alt="remove glassfish4">
-</div>
-</div>
-<div class="paragraph">
-<p>Veja que nas propriedades do servidor é possível verificar em que pasta ele foi instalado (normalmente a pasta de instalação do NetBeans). Caso deseje, pode remover tal pasta também.</p>
-</div>
-<div class="paragraph">
-<p>Baixe o Eclipse GlassFish 5 <a href="https://projects.eclipse.org/projects/ee4j.glassfish/downloads">aqui</a>. Tenha certeza de baixar a versão completa "GlassFish 5 - Full Platform", que possui todas as especificações do JavaEE. Basta descompactar em qualquer lugar que será criada uma pasta <code>glassfish5</code>.</p>
 </div>
 <div class="paragraph">
 <p>Como vamos usar o MySQL como banco de dados, precisaremos do MySQL Connector J, driver JBDC do MySQL (que vai ser utilizado internamente para acesso ao BD). Baixe o driver no <a href="https://dev.mysql.com/downloads/connector/j/">site oficial</a>.</p>
 </div>
 <div class="paragraph">
 <p>Após descompactar o driver, o único arquivo que nos interessa é o <code>mysql-connector-java-X.X.X-bin.jar</code> (onde X.X.X é a versão do driver). Copie tal arquivo para a pasta <code>glassfish5/glassfish/domains/domain1/lib</code> (considerando que <code>glassfish5</code> é a pasta onde descompactou o GlassFish). As bibliotecas colocadas em tal pasta serão carregadas automaticamente pelo GlassFish.</p>
-</div>
-<div class="paragraph">
-<p>Vamos então registrar o GlassFish 5 no NetBeans, indo na aba "Services" e adicionar um novo server no item "Servers", como mostrado a seguir. Observe que não é preciso informar usuário ou senha do GlassFish. Mas o usuário padrão é <code>admin</code> e não possui uma senha.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/register-glassfish5-netbeans.gif" alt="register glassfish5 netbeans">
-</div>
-</div>
-<div class="paragraph">
-<p>Observe que após registrar o servidor, o iniciamos em seguida para verificar se tudo correu bem. Depois que o servidor for iniciado e ficar com um botão de "play" verde do lado do seu ícone, podemos abrir o console de administração para verificar se está tudo correto mesmo.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/glassfish-admin-console.gif" alt="glassfish admin console">
-</div>
 </div>
 </div>
 </div>
@@ -599,19 +568,19 @@ Para isto, basta ir na aba "Services" no lado esquerdo da janela principal do Ne
 <h2 id="_estrutura_do_projeto">2. Estrutura do projeto</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Utilizaremos o <a href="https://pt.wikipedia.org/wiki/Hibernate">Hibernate</a> como framework de <a href="https://pt.wikipedia.org/wiki/Mapeamento_objeto-relacional">mapeamento objeto relacional (Object Relational Mapping - ORM)</a>, que é uma implementação da especificação <a href="https://pt.wikipedia.org/wiki/Java_Persistence_API">JPA</a>. Ele nos permite esquecer os detalhes de BDs relacionais (como SQL, Primary Keys (PKs), Foreign Keys (FKs), criação de tabelas, etc) e assim podermos trabalhar exclusivamente em um modelo orientado a objetos, mesmo para manipulação dos dados no banco.</p>
+<p>Utilizaremos o <a href="https://pt.wikipedia.org/wiki/Hibernate">Hibernate</a> como framework de <a href="https://pt.wikipedia.org/wiki/Mapeamento_objeto-relacional">mapeamento objeto relacional (Object Relational Mapping - ORM)</a>, que é uma implementação da especificação <a href="https://pt.wikipedia.org/wiki/Java_Persistence_API">JPA</a>. Ele nos permite "esquecer" os detalhes de BDs relacionais (como SQL, Primary Keys (PKs), Foreign Keys (FKs), criação de tabelas, etc) e assim podermos trabalhar exclusivamente em um modelo orientado a objetos, mesmo para manipulação dos dados no banco.</p>
 </div>
 <div class="paragraph">
-<p>A especificação <a href="http://cdi-spec.org">Context and Dependency Injection (CDI)</a> permite que objetos sejam injetados (ou seja, criados automaticamente) onde precisarmos. Tal especificação é implementada por servidores de aplicação como o GlassFish ou WildFly. Podemos fazer o deploy (implantar) aplicações utilizando CDI em Web Containers como Tomcat ou Jetty (que não implementam todas as especificações da plataforma Java EE e logo são mais leves), mas isto requer uma série de configurações.</p>
+<p>A especificação <a href="http://cdi-spec.org">Context and Dependency Injection (CDI)</a> permite que objetos sejam injetados (ou seja, criados automaticamente) onde precisarmos. Tal especificação é implementada por padrão em servidores de aplicação como o GlassFish ou WildFly.</p>
 </div>
 <div class="paragraph">
 <p>CDI permite diminuir o acoplamento de um software, ou seja, reduz o nível de dependência do nosso projeto. Por exemplo, a partir do momento que utilizamos a especificação JPA como camada de persistência (para salvarmos os dados em algum lugar, neste caso em um BD), se instanciarmos diretamente no nosso código objetos JPA para fazer tais operações, estamos aumentando o nível de dependência do nosso projeto, tornando ele fortemente dependente da JPA. Se precisamos, por exemplo, persistir certos objetos em outro repositório, como em arquivos no disco, precisaríamos instanciar explicitamente objetos diferentes para realizar tal tarefa.</p>
 </div>
 <div class="paragraph">
-<p>Com CDI, podemos simplesmente declarar um objeto e indicar que queremos que uma instância de tal objeto seja injetada automaticamente quando tal objeto precisar ser usado. Com isto, podemos ter uma arquivo de configuração separado que define qual instância será injetada quando um objeto de um determinado tipo for solicitado. Se precisarmos mudar o tipo de objeto (como objetos que usam JPA para persistir dados em um BD por objetos que simplesmente salvam dados em um arquivo), podemos alterar isso em apenas um lugar do código. Observe que utilizei o termo "tipo" e não "classe", uma vez que este tipo pode ser tanto uma classe quanto uma interface, sendo interfaces comumente mais utilizadas.</p>
+<p>Com CDI, podemos simplesmente declarar um objeto e indicar que queremos que uma instância de tal objeto seja injetada automaticamente quando tal objeto precisar ser usado. Com isto, podemos ter um arquivo de configuração separado que define qual instância será injetada quando um objeto de um determinado tipo for solicitado. Se precisarmos mudar o tipo de objeto (como objetos que usam JPA para persistir dados em um BD por objetos que simplesmente salvam dados em um arquivo), podemos alterar isso em apenas um lugar do código. Observe que utilizei o termo "tipo" e não "classe", uma vez que este tipo pode ser tanto uma classe quanto uma interface, sendo interfaces comumente mais utilizadas.</p>
 </div>
 <div class="paragraph">
-<p>O CDI também nos livra de termos que utilizar o operador <code>new</code> sempre que precisarmos usar um deteminado objeto. Quanto ao servidor de aplicação, o NetBeans 8.2 já disponibiliza o GlassFish 4.1, mas devido a alguns problemas encontrados com tal versão, vamos usar a versão 5.0.</p>
+<p>O CDI também nos livra de termos que utilizar o operador <code>new</code> sempre que precisarmos usar um deteminado objeto.</p>
 </div>
 </div>
 </div>
@@ -619,10 +588,10 @@ Para isto, basta ir na aba "Services" no lado esquerdo da janela principal do Ne
 <h2 id="_o_projeto">3. O projeto</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>O projeto que desenvoremos será bem simples. O diagrama de classe abaixo mostra que teremos apenas duas classes de negócio <code>Usuario</code> e <code>Cidade</code>. O servidor disponibilizará um cadastro de usuários por meio de um WS REST. A classe <code>Usuario</code> tem apenas dados básicos e mais um atributo que indica a cidade onde ele mora.</p>
+<p>O projeto que desenvolveremos será bem simples. O diagrama de classe abaixo mostra que teremos apenas duas classes de negócio <code>Usuario</code> e <code>Cidade</code>. O servidor disponibilizará um cadastro de usuários por meio de um Web Service REST. A classe <code>Usuario</code> tem apenas dados básicos e mais um atributo que indica a cidade onde ele mora.</p>
 </div>
 <div class="paragraph">
-<p>Existe uma interface <code>Cadastro</code> que será implementada por todas as classes que representarem tabelas no BD. Tal interface apenas define tais classes devem possui um getter e setter para um atributo <code>id</code> que cada classe de negócio terá. Assim, estamos definindo que todas essas classes devem ter um atributo <code>id</code>, que será bastante útil posteriormente.</p>
+<p>Existe uma interface <code>Cadastro</code> que será implementada por todas as classes que representarem tabelas no BD. Tal interface apenas define  um getter e setter para um atributo <code>id</code> que cada classe de negócio terá. Assim, estamos definindo que todas essas classes devem ter um atributo <code>id</code>, que será bastante útil posteriormente.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -755,7 +724,7 @@ Para isto, basta ir na aba "Services" no lado esquerdo da janela principal do Ne
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Se estivessemos usando um banco de dados que não suporta campos autoincrement mas apenas o recurso de sequences (como o PostgreSQL), deveríamos usar o valor <code>GenerationType.SEQUENCE</code> na anotação <code>@GeneratedValue</code>.
@@ -855,7 +824,7 @@ como mostra este <a href="https://youtu.be/7y--ODvjdjQ">vídeo</a>.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Em aplicações com uma grande quantidade de classes, usar <code>bean-discovery-mode=all</code> pode causar <a href="https://weld.cdi-spec.org/news/2016/10/25/tip3-performance/">maior consumo de memória e maior tempo de inicialização</a>.
@@ -871,7 +840,7 @@ Em aplicações com uma grande quantidade de classes, usar <code>bean-discovery-
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code data-lang="java" class="language-java hljs">        &lt;dependency&gt;
+<pre class="highlightjs highlight"><code data-lang="xml" class="language-xml hljs">        &lt;dependency&gt;
             &lt;groupId&gt;org.hibernate.javax.persistence&lt;/groupId&gt;
             &lt;artifactId&gt;hibernate-jpa-2.1-api&lt;/artifactId&gt;
             &lt;version&gt;1.0.2.Final&lt;/version&gt;
@@ -1206,7 +1175,7 @@ public class UsuarioResource {
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1242,7 +1211,7 @@ public class UsuarioResource {
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Certifique-se de incluir a anotação <code>@PathParam</code> correta, do pacote <code>javax.ws.rs</code>. Como existe uma anotação de mesmo nome no pacote <code>javax.websocket.server</code>, incluir esta vai causar o erro <em>"The request entity cannot be empty"</em>. Tal erro indica que o parâmetro anotado com a <code>@PathParam</code> incorreta não recebeu o valor passado pela URL (como especificado na anotação <code>@Path</code> do método <code>findById()</code>).
@@ -1282,7 +1251,7 @@ Neste caso, como vamos passar um usuário a ser inserido no banco, o parâmetro 
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Tenha certeza de importar a anotação <code>@POST</code> correta, do pacote <code>javax.ws.rs</code>. Importando outra anotação que possa aparecer nas opções do IDE irá fazer com que o projeto não compile.
@@ -1300,7 +1269,7 @@ Tenha certeza de importar a anotação <code>@POST</code> correta, do pacote <co
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1402,7 +1371,7 @@ publicados por um serviço REST (como o serviço de usuários desenvolvido aqui)
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 Observe que ainda não implementamos os métodos para alterar e excluir usuários (verbos POST e PUT). <strong>No caso da operação de inserir usuários, se tentar acessá-la, verá que ocorrerá um erro. Isto será explicado na próxima seção.</strong>
@@ -1419,7 +1388,7 @@ Nos exemplos acima, é passado um objeto <code>Usuario</code> em formato JSON. N
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Observe que ao enviar conteúdo JSON, é preciso usar aspas duplas ao redor do nome de atributos e valores. Todo o código JSON deve ser envolvido em aspas simples, não o contrário. Se as aspas forem invertidas, o servidor indicará que o JSON é inválido.
@@ -1439,12 +1408,12 @@ Observe que ao enviar conteúdo JSON, é preciso usar aspas duplas ao redor do n
 <p>Para o Firefox você pode baixar o plugin <a href="https://addons.mozilla.org/pt-BR/firefox/addon/restclient/">RESTClient</a>.</p>
 </li>
 <li>
-<p>Para o Google Chrome utilizo a excelente extensão <a href="https://chrome.google.com/webstore/detail/restlet-client-rest-api-t/aejoelaoggembcahagimdiliamlcdmfm/">Restlet Client</a>.</p>
+<p>Para o Google Chrome utilizo a excelente extensão <a href="https://chrome.google.com/webstore/detail/restlet-client-rest-api-t/aejoelaoggembcahagimdiliamlcdmfm/">Talend API Tester (antigo Restlet Client)</a>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>A extensão Restlet Client tem um recurso extremamente útil de permitir criar projetos e salvar diferentes requisições HTTP
+<p>A extensão <em>Talend API Tester</em> tem um recurso extremamente útil de permitir criar projetos e salvar diferentes requisições HTTP
 dentro deste projeto. Assim, podemos facilmente reenviar tais requisições sem ter que configurá-las novamente.
 Muitas vezes, apenas alteramos valores de parâmetros e pronto. A imagem abaixo apresenta um exemplo de um projeto
 criado em tal ferramenta.</p>
@@ -1530,14 +1499,14 @@ Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado,
 <h2 id="_download_do_código_fonte">6. Download do código fonte</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>O código fonte do projeto pode ser acessado na pasta 4.4-ws-rest-cadastro <a href="https://github.com/manoelcampos/sd-webservices">deste repositório</a>.</p>
+<p>O código fonte do projeto pode ser baixado como zip <a href="https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.4-ws-rest-cadastro">aqui</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-24 14:14:05 -0300
+Last updated 2020-03-05 15:16:53 -0300
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
