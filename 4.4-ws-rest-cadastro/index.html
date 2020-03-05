@@ -720,18 +720,6 @@ Não precisaremos criar as tabelas manualmente, como veremos a seguir.
     private long id;</code></pre>
 </div>
 </div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Se estivessemos usando um banco de dados que não suporta campos autoincrement mas apenas o recurso de sequences (como o PostgreSQL), deveríamos usar o valor <code>GenerationType.SEQUENCE</code> na anotação <code>@GeneratedValue</code>.
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>As classes anotadas com <code>@Entity</code> (que a partir de agora, por simplificação chamaremos apenas de Entity) devem implementar a interface <code>Serializable</code>, indicando que objetos de tais classes podem ser persistidos (salvos). Também podemos usar o NetBeans para fazer essa modificação para nós.</p>
 </div>
@@ -1490,7 +1478,7 @@ public boolean delete(@PathParam("id") long id) {
 <div class="paragraph">
 <p>Pronto, agora pode usar alguma das formas mostradas anteriormente para testar qualquer método do serviço REST implementado.
 Espero que o tutorial tenha sido completo e esclarecedor.
-Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado, basta criar uma nova issue <a href="https://github.com/manoelcampos/sistemas-distribuidos/issues">aqui</a>.</p>
+Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado, basta criar uma nova issue <a href="https://github.com/manoelcampos/sd-webservices/issues">aqui</a>.</p>
 </div>
 </div>
 </div>
@@ -1506,7 +1494,7 @@ Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado,
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-05 15:16:53 -0300
+Last updated 2020-03-05 15:31:30 -0300
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

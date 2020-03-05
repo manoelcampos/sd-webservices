@@ -195,8 +195,6 @@ Para indicarmos que desejamos que o valor deste campo seja gerado automaticament
     private long id;
 ----
 
-IMPORTANT: Se estivessemos usando um banco de dados que não suporta campos autoincrement mas apenas o recurso de sequences (como o PostgreSQL), deveríamos usar o valor `GenerationType.SEQUENCE` na anotação `@GeneratedValue`.
-
 As classes anotadas com `@Entity` (que a partir de agora, por simplificação chamaremos apenas de Entity) devem implementar a interface `Serializable`, indicando que objetos de tais classes podem ser persistidos (salvos). Também podemos usar o NetBeans para fazer essa modificação para nós.
 
 image::implement-serializable.gif[]
@@ -668,7 +666,7 @@ public boolean delete(@PathParam("id") long id) {
 
 Pronto, agora pode usar alguma das formas mostradas anteriormente para testar qualquer método do serviço REST implementado.
 Espero que o tutorial tenha sido completo e esclarecedor.
-Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado, basta criar uma nova issue https://github.com/manoelcampos/sistemas-distribuidos/issues[aqui].
+Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado, basta criar uma nova issue https://github.com/manoelcampos/sd-webservices/issues[aqui].
 
 == Download do código fonte
 
