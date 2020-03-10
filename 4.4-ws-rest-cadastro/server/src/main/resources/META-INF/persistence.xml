@@ -14,6 +14,9 @@
             pode ser necessário atualizar o script para que ele
             continue funcionando. -->
             <property name="javax.persistence.sql-load-script-source" value="META-INF/dados.sql"/>
+            
+            <!-- Necessário apenas para MySQL 8 -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
         </properties>
     </persistence-unit>
 </persistence>

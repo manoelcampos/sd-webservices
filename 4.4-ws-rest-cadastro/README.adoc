@@ -263,12 +263,12 @@ O arquivo `pom.xml` (criando automaticamente quando criamos o projeto Maven) é 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.1.0.Final</version>
+            <version>5.4.12.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.1.0.Final</version>
+            <version>5.4.12.Final</version>
         </dependency>
 ----
 
