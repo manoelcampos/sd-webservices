@@ -17,7 +17,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-= Cadastro com Banco de Dados MySQL utilizando Web Service SOAP (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.2-ws-soap-cadastro[zip])
+= Cadastro com Banco de Dados MySQL 8 utilizando Web Service SOAP (link:https://kinolien.github.io/gitzip/?download=/manoelcampos/sd-webservices/tree/master/4.2-ws-soap-cadastro[zip])
 
 [WARNING]
 ====
@@ -29,17 +29,11 @@ Ferramentas como o `wsimport` (usada para ler arquivos WSDL e gerar código Java
 ====
 
 Esta aplicação cria um servidor SOAP que fornece um Web Service para
-permitir a realização de cadastros em um banco de dados MySQL.
+permitir a realização de cadastros em um banco de dados MySQL 8.
 
 O projeto usa a Java Persistence API (JPA) para Mapeamento Objeto-Relacional (Object Relational Mapping, ORM) por meio do framework Hibernate 5.
 
-O projeto foi criado e testado no NetBeans 8.2 usando JDK 8.
-Uma versão mais recente como o NetBeans 11 pode ser usada
-mas a maioria dos servidores de aplicação ainda não funcionam
-com versões do JDK acima do 8.
-O projeto pode até utilizar uma versão mais recente do JDK,
-mas o IDE precisa rodar com o JDK 8.
-
+O projeto foi criado e testado no NetBeans 11 usando JDK 8.
 O IntelliJ IDEA Community (que é a versão gratuita) não possui suporte a Java EE (para desenvolvimento Web).
 
 == Projetos
@@ -75,7 +69,6 @@ Assim, se você já tiver uma aplicação que usa um determinado nome de DataSou
 Se você estiver executando o projeto em um laboratório de informática onde outros alunos também rodaram o mesmo projeto,
 um erro como `Unable to lookup JNDI name [NomeDoDataSource]` pode ocorrer. Neste caso, tente alterar o nome do DataSource nos arquivos xml indicados acima.
 
-
 === Aplicação Cliente para consumir os Web Services
 
 O cliente é apenas um projeto Maven >> Java Application.
@@ -106,25 +99,13 @@ https://docs.microsoft.com/en-us/windows/wsl/install-win10[Windows Subsystem for
 
 === Servidor de Aplicação
 
-O projeto requer um servidor de aplicação (Application Server, comumente chamados de AppServer ou simplesmente AS) instalado e registrado no NetBeans. Ele foi testado com GlassFish 5. Apesar de o NetBeans 8.2 já vir com o Glass Fish 4.2 instalado e configurado, tal versão apresentou apresentou problemas para funcionar com Web Services SOAP e o Hibernate 5. Por esse motivo, foi utilizado o https://javaee.github.io/glassfish/[GlassFish 5 Full Platform] que pode ser baixado diretamente http://download.oracle.com/glassfish/5.0/release/glassfish-5.0.zip[aqui].
-
-Após baixar o GlassFish, basta descompactar o zip em qualquer lugar, como na pasta do seu usuário no sistema operacional.
-Como a maioria dos servidores de aplicação, o GlassFish tem um console de administração web.
-Para definir/alterar a senha para acesso a tal console (senha que também é necessária para configurar o GlassFish no NetBeans),
-abra um terminal na pasta `bin` onde descompactou o GlassFish. 
-Se estiver usando Linux/macOS, execute `./asadmin change-admin-password`.
-No Windows o comando é `asadmin.bat change-admin-password`.
-
-Digite `admin` na primeira pergunta para indicar o nome do usuário do GlassFish. Na segunda pergunta apenas digite enter para digitar a senha atual. 
-Digite a nova senha como `admin` também, assim fica fácil de lembrar que o usuário e a senha são os mesmos. No ambiente de desenvolvimento isto é perfeito, só não podemos definir uma senha assim em um ambiente de produção.
-
-Se necessário, execute o comando acima como root. Tal comando não funciona com as últimas versões do JDK (pelo menos não o JDK 11).
+O projeto requer um servidor de aplicação (Application Server, comumente chamados de AppServer ou simplesmente AS) instalado e registrado no NetBeans. Ele foi testado com GlassFish 5, que pode ser baixado diretamente do NetBeans.
 
 Como nosso projeto usa um banco MySQL, é preciso baixar o driver JDBC que permite que aplicações Java possam se comunicar com o banco. Uma vez que estamos usando Hibernate para acesso ao banco (mapeamento objeto-relacional), nossa aplicação não depende de tal biblioteca. No entanto, o App Server depende dela, pois ele que vai gerenciar as conexões com o banco.
 
 O driver (que nada mais é que um arquivo .jar) deve ser baixado em https://dev.mysql.com/downloads/connector/j/.
 Baixe a versão da biblioteca compatível com a versão do servidor MySQL que estiver usando.
-Se tiver MySQL Server 5, precisará da versão 5 ou superior do driver JDBC. No link acima, certifique-se de escolher a opção "Platform Independent", que vai disponibilizar um arquivo zip ou tar.gz.
+Como estamos usando MySQL Server 8, precisará da versão 8 do driver JDBC. No link acima, certifique-se de escolher a opção "Platform Independent", que vai disponibilizar um arquivo zip ou tar.gz.
 
 Após baixar o zip, descompacte ele em uma pasta temporária, pois vamos precisar apenas de um arquivo com o nome no formato `mysql-connector-java-VERSAO-bin.jar`. Considerando que você descompactou o GlassFish em uma pasta chamada `glassfish5`, copie tal arquivo jar para
 `glassfish5/glassfish/domains/domain1/lib`.

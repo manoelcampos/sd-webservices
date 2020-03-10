@@ -9,3 +9,4 @@ test/
 #nbproject/
 nbactions.xml
 **/src/wsdl
+nb-configuration.xml

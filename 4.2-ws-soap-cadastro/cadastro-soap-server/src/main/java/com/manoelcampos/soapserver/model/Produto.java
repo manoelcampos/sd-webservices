@@ -47,4 +47,9 @@ public class Produto implements Cadastro {
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
+
+    @Override
+    public String toString() {
+        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", marca=" + marca + '}';
+    }    
 }

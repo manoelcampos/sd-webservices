@@ -10,14 +10,13 @@
   implantanda no GlassFish, por meio do arquivo 
   WEB-INFO/glassfish-resources.xml
   O nome do DataSource aqui deve ser o mesmo que no arquivo acima.
-
-  glassfish 4: admin adminadmin 
   -->
   <persistence-unit name="default" transaction-type="JTA">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <jta-data-source>java:app/jdbc/cadastro_soap</jta-data-source>
     <properties>
       <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
     </properties>
   </persistence-unit>
 </persistence>

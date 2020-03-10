@@ -36,4 +36,10 @@ public class Marca implements Cadastro {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "Marca{" + "id=" + id + ", nome=" + nome + '}';
+    }
+    
 }

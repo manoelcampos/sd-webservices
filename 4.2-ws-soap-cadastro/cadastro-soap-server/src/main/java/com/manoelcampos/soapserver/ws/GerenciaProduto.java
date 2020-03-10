@@ -40,6 +40,10 @@ public class GerenciaProduto {
     
     @WebMethod(operationName = "getById")
     public Produto getById(@WebParam(name = "id") long id) {
-        return dao.getById(id);
+        Produto p = dao.getById(id);
+        if(p != null){
+            System.out.println("\nProduto Localizado: " + p);
+        }
+        return p;
     }    
 }
