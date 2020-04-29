@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 public class ClienteResource {
     @Inject 
     private DAO<Cliente> dao;
-        
+    
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
