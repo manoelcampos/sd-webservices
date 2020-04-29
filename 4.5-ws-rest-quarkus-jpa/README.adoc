@@ -30,18 +30,15 @@ Veja a documentação das classes no pacote `model` para mais detalhes.
 
 === Ferramentas
 
-O projeto requer JDK 8 ou 11 e Maven 3.5.3 ou superior.
-Mesmo as versões mais atuais do NetBeans vêm com versões antigas do Maven. 
-Por isso, ao tentar compilar o projeto no NetBeans você pode receber o erro abaixo:
+O projeto requer JDK 8 ou 11 e Maven 3.6.3 ou superior.
+Mesmo as versões mais atuais do NetBeans vêm com versões antigas do Maven que não irá funcionar.
 
-```
-com.google.inject.ProvisionException: Unable to provision, see the following errors:
+O maven pode ser instalado, por exemplo em distribuições Linux baseadas em Debian, com:
 
-1) Error injecting: private org.eclipse.aether.spi.log.Logger org.apache.maven.repository.internal.DefaultVersionRangeResolver.logger
-```
-
-O maven pode ser instalado, por exemplo em distribuições Linux baseadas em Debian,
-com `sudo apt-get install maven`. 
+[source,bash]
+----
+sudo apt-get install maven
+----
 
 No Windows, pode-se baixar um arquivo `apache-maven-x.x.x-bin.zip` em https://maven.apache.org/download.cgi. Você também pode configurar o https://docs.microsoft.com/en-us/windows/wsl/install-win10[Windows Subsystem for Linux] e assim poderá baixar aplicações usando o mesmo comando Linux acima.
 
