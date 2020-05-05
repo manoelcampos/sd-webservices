@@ -1,4 +1,21 @@
+:source-highlighter: highlightjs
+:icons: font
+:numbered:
+:listing-caption: Listagem
+:figure-caption: Figura
+
+ifdef::env-github[]
+:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
 = Web Services
+
+== Introdução
 
 Fornece diversos projetos que implementam e consomem (acessam/utilizam) Serviços Web
 nos padrões SOAP e REST.
@@ -14,6 +31,13 @@ de endereços a partir do CEP, disponibilizado pelos Correios.
 A intenção do script é apenas mostrar como é a requisição SOAP sendo trafegada via HTTP e como é a resposta obtida.
 
 Veja as sub-pastas dos projetos para detalhes.
+
+== Web Services REST
+
+A apresentação acima apresenta detalhes do estilo arquitetural REST.
+Um resumo dos principais termos e características,
+baseado na tese de doutorado de Roy Fielding (criado do REST),
+está disponível link:REST.adoc[aqui].
 
 == Material Complementar
 
