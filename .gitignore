@@ -10,3 +10,6 @@ test/
 nbactions.xml
 **/src/wsdl
 nb-configuration.xml
+
+#MacOS Files
+.DS_Store

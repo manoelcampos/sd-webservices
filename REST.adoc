@@ -40,13 +40,13 @@ documento, arquivo, mensagem HTTP, instância, etc. (Tabela 5.1 e seção 5.2.1.
 - Escalabilidade
 - Simplicidade: Separation of Concerns (SoC), componentização
 - Modificabilidade
-- Evolutividade: grau em que a implementação de um componente pode ser alterada sem impactar negativamente outros componentes
-- Extensibilidade: habilidade de adicionar novas funções ao sistema
-- Personalização
-- Configurabilidade
-- Reusabilidade: principal mecanismo é a redução de acoplamento
+    - Evolutividade: grau em que a implementação de um componente pode ser alterada sem impactar negativamente outros componentes
+    - Extensibilidade: habilidade de adicionar novas funções ao sistema
+    - Personalização
+    - Configurabilidade
+    - Reusabilidade: componente poder ser usado, em outras aplicações, sem modificação. O principal mecanismo é a redução de acoplamento.
 - Visibilidade: para monitoramento ou intermediação de interações. Se as interações são visíveis, performance pode ser melhorada via cache e mecanismos de segurança e auditoria podem ser implementados.
-- Portabilidade
+- Portabilidade: capacidade de executar em diferentes ambientes.
 - Confiabilidade
 
 == Restrições para uma arquitetura REST
@@ -73,7 +73,7 @@ Um componente não pode ver além da camada com a qual ele se comunica. Assim, u
 
 === Code-on-Demand
 
-Download de scripts para o cliente.
+Download de scripts pelo cliente.
 
 == Elementos arquiteturais do REST
 

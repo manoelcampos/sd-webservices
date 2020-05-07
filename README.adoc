@@ -30,6 +30,13 @@ A intenção do script é apenas mostrar como é a requisição SOAP sendo trafe
 
 Veja as sub-pastas dos projetos para detalhes.
 
+== Web Services REST
+
+Esta link:rest.pptx[apresentação] mostra detalhes do estilo arquitetural REST.
+Um resumo dos principais termos e características,
+baseado na tese de doutorado de Roy Fielding (criador do REST),
+está disponível link:REST.adoc[aqui].
+
 == Material Complementar
 
 Acesse o https://github.com/manoelcampos/sd-web-services/wiki[Wiki] para consultar materiais complementares.
