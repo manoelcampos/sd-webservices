@@ -573,15 +573,6 @@ Não precisaremos criar as tabelas manualmente, como veremos a seguir.
 <div class="paragraph">
 <p>A especificação <a href="http://cdi-spec.org">Context and Dependency Injection (CDI)</a> permite que objetos sejam injetados (ou seja, criados automaticamente) onde precisarmos. Tal especificação é implementada por padrão em servidores de aplicação como o GlassFish ou WildFly.</p>
 </div>
-<div class="paragraph">
-<p>CDI permite diminuir o acoplamento de um software, ou seja, reduz o nível de dependência do nosso projeto. Por exemplo, a partir do momento que utilizamos a especificação JPA como camada de persistência (para salvarmos os dados em algum lugar, neste caso em um BD), se instanciarmos diretamente no nosso código objetos JPA para fazer tais operações, estamos aumentando o nível de dependência do nosso projeto, tornando ele fortemente dependente da JPA. Se precisamos, por exemplo, persistir certos objetos em outro repositório, como em arquivos no disco, precisaríamos instanciar explicitamente objetos diferentes para realizar tal tarefa.</p>
-</div>
-<div class="paragraph">
-<p>Com CDI, podemos simplesmente declarar um objeto e indicar que queremos que uma instância de tal objeto seja injetada automaticamente quando tal objeto precisar ser usado. Com isto, podemos ter um arquivo de configuração separado que define qual instância será injetada quando um objeto de um determinado tipo for solicitado. Se precisarmos mudar o tipo de objeto (como objetos que usam JPA para persistir dados em um BD por objetos que simplesmente salvam dados em um arquivo), podemos alterar isso em apenas um lugar do código. Observe que utilizei o termo "tipo" e não "classe", uma vez que este tipo pode ser tanto uma classe quanto uma interface, sendo interfaces comumente mais utilizadas.</p>
-</div>
-<div class="paragraph">
-<p>O CDI também nos livra de termos que utilizar o operador <code>new</code> sempre que precisarmos usar um deteminado objeto.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -1513,7 +1504,7 @@ Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado,
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-14 21:18:01 -0300
+Last updated 2020-12-14 21:33:55 -0300
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
