@@ -55,7 +55,7 @@ Se estiver usando Windows ou macOS, pode baixar o instalador do
 MySQL Server Community https://dev.mysql.com/downloads/mysql/[aqui].
 Certifique-se de conferir qual a versão do MySQL está sendo baixada,
 pois existem diferenças de configuração para as versões 5 e 8 que serão discutidas adiante.
-No Linux, basta digitar `mysql --version` no terminal.
+No Linux, basta digitar `mysql --version` no terminal depois de instalar o servidor para verificar a versão.
 
 ==== Criando o Banco de Dados
 
@@ -330,8 +330,8 @@ Tal interface define métodos para:
 
 - localizar um objeto no BD a partir do seu id: `findById()`;
 - localizar por um campo específico: `findByField()`;
-- remover: `delete(T entity)` e `delte(long id)`;
-- e salvar um objeto no BD e retornar o id gerado: `save()`. 
+- remover: `delete(T entity)` e `delete(long id)`;
+- e salvar um objeto no BD, retornando o id gerado: `save()`. 
 
 A interface usa https://www.devmedia.com.br/usando-generics-em-java/28981[Generics] para permitir indicar qual o tipo de objeto de negócio (que implementa a interface `Cadastro`) um DAO trabalhará. Assim, quando mandarmos localizar um `Usuario` utilizando seu id, teremos como retorno um objeto `Usuario` e não um objeto genérico como `Object`. Generics é um assunto bem extenso que está fora do escopo deste artigo.
 
@@ -463,7 +463,7 @@ Ao executar o projeto, uma página como http://localhost:8080/server/ será aces
 
 O serviço REST que vamos implementar vai fornecer as famosas operações CRUD (Create, Read, Update e Delete)
 que permite inserir (Criar), obter (Ler), alterar (Atualizar) e deletar registros de uma tabela de um BD.
-Como pode ser visto link:../webservices.pptx[nesta apresentação], em serviços REST, tais métodos CRUD devem ser associados a determinados métodos HTTP. A tabela abaixo a associação entre verbos HTTP, operações CRUD e comandos SQL.
+Como pode ser visto link:../introducao-webservices.pptx[nesta apresentação], em serviços REST, tais métodos CRUD devem ser associados a determinados métodos HTTP. A tabela abaixo a associação entre verbos HTTP, operações CRUD e comandos SQL.
 
 |===
 |*Verbo (Método) HTTP* |*Operação CRUD* |*Comando SQL*
@@ -514,12 +514,19 @@ Para publicar tal classe como um recurso acessível via HTTP, precisamos incluir
 ====
 A URL para acesso a um determinado método é formada pela:
 
-- URL base da aplicação, normalmente http://localhost:8080/NomeDaAplicacao
-- mais o caminho (`@Path`) base do serviço REST, definido na classe `RestConfig` como `api`
-- mais o caminho da classe do serviço
-- mais o caminho do método a ser acessado
+- URL base da aplicação, normalmente http&#58;//localhost:8080/NomeDaAplicacao
+- caminho (`@Path`) base do serviço REST, definido na classe `RestConfig` como `api`
+- caminho da classe do serviço
+- caminho do método a ser acessado (incluindo possíveis parâmetros).
 
-Assim, a URL completa para acesso ao método `findById()` da classe `UsuarioResource` seria algo como http://localhost:8080/server/api/usuario/{id}, onde {id} deve ser substituído pelo id do usuário que deseja-se obter.
+Assim, a URL completa para acesso ao método `findById()` da classe `UsuarioResource` seria algo como:
+
+- http&#58;//localhost:8080/server
+- /api
+- /usuario
+- /{id}
+
+ou seja: http://localhost:8080/server/api/usuario/{id}, onde {id} deve ser substituído pelo id do usuário que deseja-se obter.
 ====
 
 Observe que o método `findById` possui um parâmetro id. Quando utilizamos a anotação `@Path` para indicar qual o caminho a ser utilizado para acessar tal método via HTTP, definimos o nome como `{id}` (entre chaves), para indicar que `id` deve ser um valor a ser passado na URL após `/usuario`. Esta valor será passado automaticamente para o parâmetro id do método, uma vez que utilizamos a tag `@PathParam` para indicar isso. Note que no `@PathParam` não se usa chaves. Assim, se acessarmos uma URL terminada em `/usuario/1`, estamos querendo obter o usuário de id igual a 1. Assim, o valor para o parâmetro `id` é obtido a partir da URL e passado para o parâmetro id no método.

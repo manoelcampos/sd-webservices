@@ -513,7 +513,7 @@ Isto se deve a diversos fatores como:</p>
 MySQL Server Community <a href="https://dev.mysql.com/downloads/mysql/">aqui</a>.
 Certifique-se de conferir qual a versão do MySQL está sendo baixada,
 pois existem diferenças de configuração para as versões 5 e 8 que serão discutidas adiante.
-No Linux, basta digitar <code>mysql --version</code> no terminal.</p>
+No Linux, basta digitar <code>mysql --version</code> no terminal depois de instalar o servidor para verificar a versão.</p>
 </div>
 <div class="sect3">
 <h4 id="_criando_o_banco_de_dados">1.1.1. Criando o Banco de Dados</h4>
@@ -836,12 +836,12 @@ Em aplicações com uma grande quantidade de classes, usar <code>bean-discovery-
         &lt;dependency&gt;
             &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
             &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;
-            &lt;version&gt;5.1.0.Final&lt;/version&gt;
+            &lt;version&gt;5.4.12.Final&lt;/version&gt;
         &lt;/dependency&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
             &lt;artifactId&gt;hibernate-entitymanager&lt;/artifactId&gt;
-            &lt;version&gt;5.1.0.Final&lt;/version&gt;
+            &lt;version&gt;5.4.12.Final&lt;/version&gt;
         &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -923,10 +923,10 @@ public interface DAO&lt;T extends Cadastro&gt; {
 <p>localizar por um campo específico: <code>findByField()</code>;</p>
 </li>
 <li>
-<p>remover: <code>delete(T entity)</code> e <code>delte(long id)</code>;</p>
+<p>remover: <code>delete(T entity)</code> e <code>delete(long id)</code>;</p>
 </li>
 <li>
-<p>e salvar um objeto no BD e retornar o id gerado: <code>save()</code>.</p>
+<p>e salvar um objeto no BD, retornando o id gerado: <code>save()</code>.</p>
 </li>
 </ul>
 </div>
@@ -1082,7 +1082,7 @@ public class RestConfig extends Application {
 <div class="paragraph">
 <p>O serviço REST que vamos implementar vai fornecer as famosas operações CRUD (Create, Read, Update e Delete)
 que permite inserir (Criar), obter (Ler), alterar (Atualizar) e deletar registros de uma tabela de um BD.
-Como pode ser visto <a href="../webservices.pptx">nesta apresentação</a>, em serviços REST, tais métodos CRUD devem ser associados a determinados métodos HTTP. A tabela abaixo a associação entre verbos HTTP, operações CRUD e comandos SQL.</p>
+Como pode ser visto <a href="../introducao-webservices.pptx">nesta apresentação</a>, em serviços REST, tais métodos CRUD devem ser associados a determinados métodos HTTP. A tabela abaixo a associação entre verbos HTTP, operações CRUD e comandos SQL.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1172,21 +1172,40 @@ public class UsuarioResource {
 <div class="ulist">
 <ul>
 <li>
-<p>URL base da aplicação, normalmente <a href="http://localhost:8080/NomeDaAplicacao" class="bare">http://localhost:8080/NomeDaAplicacao</a></p>
+<p>URL base da aplicação, normalmente http&#58;//localhost:8080/NomeDaAplicacao</p>
 </li>
 <li>
-<p>mais o caminho (<code>@Path</code>) base do serviço REST, definido na classe <code>RestConfig</code> como <code>api</code></p>
+<p>caminho (<code>@Path</code>) base do serviço REST, definido na classe <code>RestConfig</code> como <code>api</code></p>
 </li>
 <li>
-<p>mais o caminho da classe do serviço</p>
+<p>caminho da classe do serviço</p>
 </li>
 <li>
-<p>mais o caminho do método a ser acessado</p>
+<p>caminho do método a ser acessado (incluindo possíveis parâmetros).</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Assim, a URL completa para acesso ao método <code>findById()</code> da classe <code>UsuarioResource</code> seria algo como <a href="http://localhost:8080/server/api/usuario/{id}" class="bare">http://localhost:8080/server/api/usuario/{id}</a>, onde {id} deve ser substituído pelo id do usuário que deseja-se obter.</p>
+<p>Assim, a URL completa para acesso ao método <code>findById()</code> da classe <code>UsuarioResource</code> seria algo como:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>http&#58;//localhost:8080/server</p>
+</li>
+<li>
+<p>/api</p>
+</li>
+<li>
+<p>/usuario</p>
+</li>
+<li>
+<p>/{id}</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ou seja: <a href="http://localhost:8080/server/api/usuario/{id}" class="bare">http://localhost:8080/server/api/usuario/{id}</a>, onde {id} deve ser substituído pelo id do usuário que deseja-se obter.</p>
 </div>
 </td>
 </tr>
@@ -1494,7 +1513,7 @@ Se encontrar algum erro, algo que ficou mal explicado ou que pode ser melhorado,
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-05 15:31:30 -0300
+Last updated 2020-12-14 21:18:01 -0300
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
