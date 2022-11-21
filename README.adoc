@@ -37,12 +37,6 @@ Um resumo dos principais termos e características,
 baseado na tese de doutorado de Roy Fielding (criador do REST),
 está disponível link:REST.adoc[aqui].
 
-== Projetos
-
-- link:https://github.com/manoelcampos/sd-webservices/tree/cryptocoins[Web app que obtém a cotação do BitCoin a partir do serviço REST do CoinMarketCap]
-- link:4.4-ws-rest-cadastro[Tutorial e projeto de criação de serviços REST com JavaEE, JAX-RS, CDI e JPA]
-- https://github.com/manoelcampos/sd-webservices/tree/quarkus[Web Service REST em Java utilizando o framework Quarkus com as mesmas tecnologias do link acima]
-
 == Material Complementar
 
 Acesse o https://github.com/manoelcampos/sd-web-services/wiki[Wiki] para consultar materiais complementares.
