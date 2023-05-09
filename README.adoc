@@ -37,6 +37,10 @@ Um resumo dos principais termos e características,
 baseado na tese de doutorado de Roy Fielding (criador do REST),
 está disponível link:REST.adoc[aqui].
 
+== Projeto de exemplo de API REST com SpringBoot para uma Loja Virtual 
+
+https://github.com/manoelcampos/loja-virtual-springboot-rest
+
 == Material Complementar
 
 Acesse o https://github.com/manoelcampos/sd-web-services/wiki[Wiki] para consultar materiais complementares.
