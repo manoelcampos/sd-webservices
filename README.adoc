@@ -17,7 +17,7 @@ endif::[]
 
 == Introdução
 
-Fornece uma link:webservices.pptx[apresentação] que dá uma visão geral sobre Web Services.
+Fornece uma https://www.icloud.com/keynote/0a2Oz1bSmqfwIY17tynx1kuvQ#introducao-webservices[apresentação] que dá uma visão geral sobre Web Services.
 Disponibiliza projetos que implementam e consomem (acessam/utilizam) Serviços Web no padrão REST.
 
 O Capítulo 2 da minha dissertação de mestrado, que trata especificamente da tecnologia de Web Services e os
@@ -32,7 +32,7 @@ Veja as sub-pastas dos projetos para detalhes.
 
 == Web Services REST
 
-Esta link:rest.pptx[apresentação] mostra detalhes do estilo arquitetural REST.
+Esta https://www.icloud.com/keynote/0f4FNPAYyW-bs64ox7v2jSI-w#rest[apresentação] mostra detalhes do estilo arquitetural REST.
 Um resumo dos principais termos e características,
 baseado na tese de doutorado de Roy Fielding (criador do REST),
 está disponível link:REST.adoc[aqui].
